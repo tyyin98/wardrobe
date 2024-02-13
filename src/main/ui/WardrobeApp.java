@@ -115,7 +115,7 @@ public class WardrobeApp {
         }
     }
 
-    // EFFECTS： Displays all the sold items with sold price and date
+    // EFFECTS: Displays all the sold items with sold price and date
     private void viewSoldItems() {
         ArrayList<Apparel> targetList = wardrobe.getSoldItems();
 
