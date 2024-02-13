@@ -126,6 +126,13 @@ public class WardrobeTest {
 
     }
 
+    @Test
+    public void testGetFavBrand() {
+        assertEquals("Dries", testWardrobe.getFavBrand());
+        testApparelA.setBrandName("Yeezy");
+        assertEquals("Yeezy", testWardrobe.getFavBrand());
+    }
+
 
 
 

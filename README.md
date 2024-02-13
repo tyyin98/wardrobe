@@ -16,7 +16,7 @@ It allows users to keep track many features of their apparel collection, includi
 
 Beyond simply keeping track of the wardrobe collection, the app also provides insightful 
 statistics. Users can explore changes in the amount of money spent from year to year, 
-identify their favorite brands and preferred shopping sites, and more.
+identify their favorite brands and more.
 
 ## Who will use it?
 From fashion enthusiasts like me to professionals working 

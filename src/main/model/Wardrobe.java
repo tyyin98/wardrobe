@@ -145,8 +145,23 @@ public class Wardrobe {
             }
         }
         return brandListNoDuplicates;
-
     }
 
+    // REQUIRES: There is at least one item in the wardrobe
+    // EFFECTS: Returns the brand from which the user bought the most
+    public String getFavBrand() {
+        String favBrand = "";
+        int numOfItems = 0;
+
+        ArrayList<String> brandList = getBrandList();
+        for (String str: brandList) {
+            int numOfItemsBrand = selectByBrand(str).size();
+            if (numOfItemsBrand > numOfItems) {
+                favBrand = str;
+                numOfItems = numOfItemsBrand;
+            }
+        }
+        return favBrand;
+    }
 
 }

@@ -327,9 +327,16 @@ public class WardrobeApp {
         int totalValue = wardrobe.calcTotalValue();
         int numItemsSold = wardrobe.getNumItemsSold();
         int revenue = wardrobe.calcRevenue();
+        String favBrand = wardrobe.getFavBrand();
+        int numFavBrandItems = wardrobe.selectByBrand(favBrand).size();
+
 
         System.out.println("You bought " + totalNumItems + " items with a total of $" + totalValue);
-        System.out.println("You sold " + numItemsSold + " of them and made $" + revenue + " by selling them.");
+        System.out.println(favBrand + " is your favourite brand. You have "
+                + numFavBrandItems + " items of this brand.");
+        System.out.println();
+
+        System.out.println("You sold " + numItemsSold + " in total and made $" + revenue + " by selling them.\n");
         System.out.println("Type r to return ");
         System.out.println("OR type p to obtain data for a certain period");
     }
@@ -343,7 +350,7 @@ public class WardrobeApp {
         Apparel apparelE = new Apparel("Vujade", "Flared Cargo", "Pants", "S", 450);
         Apparel apparelF = new Apparel("FOG", "Wool Overcoat", "Tops", "46", 750);
         Apparel apparelG = new Apparel("FOG", "Brown Raw Edge", "Pants", "30", 300);
-        apparelG.sellItem(300, new Date(3, 4, 2023));
+        apparelG.sellItem(302, new Date(3, 4, 2023));
         apparelB.setPurchaseDate(new Date(12, 30, 2025));
 
         wardrobe = new Wardrobe();
@@ -365,7 +372,6 @@ public class WardrobeApp {
         for (String str: targetList) {
             System.out.println(str);
         }
-
 
     }
 
