@@ -7,7 +7,7 @@ It allows users to keep track many features of their apparel collection, includi
 
 - category
 - item name
-- brand
+- brand/designer
 - size
 - price paid
 - sold price (if applicable)
