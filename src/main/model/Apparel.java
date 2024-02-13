@@ -1,7 +1,10 @@
 package model;
 
-//import java.util.Date;
 
+
+// Represents an apparel item that has name, a brand, a category,
+// a size, a price, a description added by the user, a purchase date,
+// a sold date, a sold price.
 public class Apparel {
 
     public static final Date DEFAULT_DATE = new Date(1, 2, 2024);
@@ -18,6 +21,7 @@ public class Apparel {
     private int priceSold;
     private Date soldDate;
 
+    // REQUIRES: brandName, itemName, category, size not empty. pricePaid not negative
     // EFFECTS: create a new apparel item
     public Apparel(String brandName, String itemName, String category, String size, int pricePaid) {
         this.brandName = brandName;
@@ -33,12 +37,11 @@ public class Apparel {
 
     // REQUIRES: isSold == false
     // MODIFIES: this
-    // EFFECTS: Mark this item as sold, update its priceSold and sold date
+    // EFFECTS: Mark this item as sold, update its priceSold and soldDate
     public void sellItem(int priceSold, Date soldDate) {
         this.isSold = true;
         setPriceSold(priceSold);
         setSoldDate(soldDate);
-
     }
 
     public String getItemName() {

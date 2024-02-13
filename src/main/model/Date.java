@@ -13,10 +13,12 @@ public class Date {
         this.year = year;
     }
 
+    // EFFECTS: Return date in a short format
     public String getDateShort() {
         return month + "-" + day + "-" + year;
     }
 
+    // EFFECTS: Return a string of date with month spelled out
     @SuppressWarnings("methodlength")
     public String getDateLong() {
         String monthStr;

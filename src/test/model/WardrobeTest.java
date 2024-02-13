@@ -105,6 +105,7 @@ public class WardrobeTest {
         testApparelA.sellItem(200, date2024);
         assertEquals(-600, testWardrobe.calcRevenue());
         assertEquals(3, testWardrobe.getNumItemsSold());
+        assertEquals(3, testWardrobe.getSoldItems().size());
     }
 
     @Test
@@ -123,7 +124,6 @@ public class WardrobeTest {
         assertEquals(5, testWardrobe.getBrandList().size());
         testWardrobe.addAnItem(testApparelA);
         assertEquals(5, testWardrobe.getBrandList().size());
-
     }
 
     @Test

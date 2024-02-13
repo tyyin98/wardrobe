@@ -2,18 +2,19 @@ package model;
 
 import java.util.ArrayList;
 
+// Represents a wardrobe with a collection of apparel items
 public class Wardrobe {
+
     private final ArrayList<Apparel> apparels;
 
-
-    // EFFECTS: create a new Apparels instance
+    // EFFECTS: create an empty collection
     public Wardrobe() {
         apparels = new ArrayList<>();
 
     }
 
     // MODIFIES: this
-    // EFFECTS: create a new apparel item and add it to the list
+    // EFFECTS: create a new item and add it to the apparels collection
     public void addAnItem(Apparel item) {
         apparels.add(item);
     }
@@ -30,7 +31,8 @@ public class Wardrobe {
         return apparels.size();
     }
 
-    // EFFECTS: return the num of items bought in the given time frame
+    // REQUIRES: startYear <= endYear
+    // EFFECTS: returns the num of items bought in the given time frame
     public int getNumItems(int startYear, int endYear) {
         int num = 0;
         for (Apparel item : apparels) {
@@ -42,7 +44,7 @@ public class Wardrobe {
         return num;
     }
 
-    // EFFECTS: return a list of apparels of the given category
+    // EFFECTS: returns a list of apparels of the given category
     public ArrayList<Apparel> selectByCategory(String category) {
         ArrayList<Apparel> resultList = new ArrayList<>();
         for (Apparel item : apparels) {
@@ -64,6 +66,7 @@ public class Wardrobe {
         return resultList;
     }
 
+    // REQUIRES: lowerBound <= higherBound
     // EFFECTS: return a list of items whose price is within the given range
     public ArrayList<Apparel> selectByPriceRange(int lowerBound, int higherBound) {
         ArrayList<Apparel> resultList = new ArrayList<>();
@@ -76,7 +79,6 @@ public class Wardrobe {
         return resultList;
     }
 
-
     // EFFECTS: calculate the total value of items on the list
     public int calcTotalValue() {
         int sum = 0;
@@ -86,7 +88,7 @@ public class Wardrobe {
         return sum;
     }
 
-    // EFFECTS: calculate the total value of items on the list bought in the given year
+    // EFFECTS: calculate the total value of items bought in the given time frame
     public int calcTotalValue(int startYear, int endYear) {
         int sum = 0;
         for (Apparel item : apparels) {
@@ -121,7 +123,7 @@ public class Wardrobe {
         return num;
     }
 
-    // EFFECTS: Return the apparel list in the wardrobe
+    // EFFECTS: Return the apparel collection array in the wardrobe
     public ArrayList<Apparel> getApparels() {
         return this.apparels;
     }
@@ -133,9 +135,9 @@ public class Wardrobe {
         for (Apparel item : apparels) {
             brandListWithDuplicates.add(item.getBrandName());
         }
-        for (String str: brandListWithDuplicates) {
+        for (String str : brandListWithDuplicates) {
             int duplicates = 0;
-            for (String string: brandListNoDuplicates) {
+            for (String string : brandListNoDuplicates) {
                 if (string.equals(str)) {
                     duplicates++;
                 }
@@ -154,7 +156,7 @@ public class Wardrobe {
         int numOfItems = 0;
 
         ArrayList<String> brandList = getBrandList();
-        for (String str: brandList) {
+        for (String str : brandList) {
             int numOfItemsBrand = selectByBrand(str).size();
             if (numOfItemsBrand > numOfItems) {
                 favBrand = str;
@@ -162,6 +164,17 @@ public class Wardrobe {
             }
         }
         return favBrand;
+    }
+
+    // EFFECTS: Returns a list of items that have been sold
+    public ArrayList<Apparel> getSoldItems() {
+        ArrayList<Apparel> targetList = new ArrayList<>();
+        for (Apparel item : apparels) {
+            if (item.getIsSold()) {
+                targetList.add(item);
+            }
+        }
+        return targetList;
     }
 
 }

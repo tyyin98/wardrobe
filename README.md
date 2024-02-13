@@ -1,7 +1,7 @@
 
 # Wardrobe 
 ## What is it and what will it do?
-Wardrobe is a desktop app that records one's apparel collection, 
+Wardrobe is a desktop app that models the user's wardrobe. It records one's apparel collection, 
 including clothes, pants, shoes, and accessories all in one place.
 It allows users to keep track many features of their apparel collection, including：
 
