@@ -38,6 +38,7 @@ public class WardrobeApp {
 
 
     private void processMainMenuCommand(String command) {
+
         if (command.equals("v")) {
             viewWardrobe();
         } else if (command.equals("e")) {
@@ -47,6 +48,8 @@ public class WardrobeApp {
         } else {
             System.out.println("Selection not valid...");
         }
+
+
     }
 
     private void viewWardrobe() {
@@ -58,8 +61,6 @@ public class WardrobeApp {
             displayViewWardrobeMenu();
             String command;
             command = input.next();
-
-
 
             try {
                 if (command.equals("f")) {
@@ -78,8 +79,8 @@ public class WardrobeApp {
 
     private void displayViewWardrobeMenu() {
         System.out.println("\tType item Index for its details:");
-        System.out.println("\tType f for filters");
-        System.out.println("\tType r to return to the HomePage");
+        System.out.println("\tType f for FILTERS");
+        System.out.println("\tType r to RETURN to the HomePage");
     }
 
     private void viewFilters() {
@@ -176,6 +177,8 @@ public class WardrobeApp {
             categoryCommand = categoryCommand.toLowerCase();
             ArrayList<Apparel> targetList;
 
+
+
             if (categoryCommand.equals("t")) {
                 targetList = wardrobe.selectByCategory("Tops");
                 printWardrobe(targetList);
@@ -264,6 +267,7 @@ public class WardrobeApp {
     }
 
     private void addItem() {
+
         System.out.println("Type the brand name of the item:");
         String brandName = input.next();
         System.out.println("Type the item name:");
@@ -288,11 +292,11 @@ public class WardrobeApp {
     }
 
     private void displayEditMenu() {
-        System.out.println("Select an operation:");
-        System.out.println("a -> Add an item ");
-        System.out.println("d -> Delete an item ");
-        System.out.println("m -> Mark an item as sold ");
-        System.out.println("r -> Return to Previous Page ");
+        System.out.println("\tSelect an operation:");
+        System.out.println("\ta -> Add an item ");
+        System.out.println("\td -> Delete an item ");
+        System.out.println("\tm -> Mark an item as sold ");
+        System.out.println("\tr -> Return to Previous Page ");
     }
 
     private void viewStats() {
@@ -394,7 +398,7 @@ public class WardrobeApp {
     }
 
     private void displayMainMenu() {
-        System.out.println("\nWelcome to Ty's wardrobe collections!");
+        System.out.println("Welcome to Ty's wardrobe collections!");
         System.out.println("Select from:");
         System.out.println("\tv -> View Wardrobe");
         System.out.println("\te -> Edit Wardrobe");
@@ -413,10 +417,10 @@ public class WardrobeApp {
 
     private void displayCategoryMenu() {
         System.out.println("Select a category:");
-        System.out.println("t -> Tops ");
-        System.out.println("p -> Pants ");
-        System.out.println("s -> Shoes ");
-        System.out.println("r -> Return to Previous Page ");
+        System.out.println("\tt -> Tops ");
+        System.out.println("\tp -> Pants ");
+        System.out.println("\ts -> Shoes ");
+        System.out.println("\tr -> Return to Previous Page ");
     }
 
 }

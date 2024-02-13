@@ -40,4 +40,54 @@ public class ApparelTest {
         assertEquals(soldDate, testApparelA.getSoldDate());
     }
 
+    @Test
+    public void testSetItemName() {
+        testApparelA.setItemName("Wool Bomber Jacket");
+        assertEquals("Wool Bomber Jacket", testApparelA.getItemName());
+    }
+
+    @Test
+    public void testSetItemBrand() {
+        testApparelA.setBrandName("Dries Van Noten");
+        assertEquals("Dries Van Noten", testApparelA.getBrandName());
+    }
+
+    @Test
+    public void testSetCategory() {
+        testApparelA.setCategory("Tops");
+        assertEquals("Tops", testApparelA.getCategory());
+    }
+
+    @Test
+    public void testSetSize() {
+        testApparelA.setSize("M");
+        assertEquals("M", testApparelA.getSize());
+    }
+
+    @Test
+    public void testSetPrice(){
+        testApparelA.setPricePaid(9999);
+        assertEquals(9999, testApparelA.getPricePaid());
+    }
+
+    @Test
+    public void testSetDescription() {
+        testApparelA.setDescription("It is cool");
+        assertEquals("It is cool", testApparelA.getDescription());
+    }
+
+    @Test
+    public void testSetBoughFrom() {
+        testApparelA.setBoughtFrom("SSENSE");
+        assertEquals("SSENSE", testApparelA.getBoughtFrom());
+    }
+
+    @Test
+    public void testSetIsSold() {
+        testApparelA.setIsSold(true);
+        assertTrue(testApparelA.getIsSold());
+    }
+
+
+
 }
