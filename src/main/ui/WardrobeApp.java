@@ -360,23 +360,9 @@ public class WardrobeApp {
     }
 
     private void printBrandList() {
-        ArrayList<String> brandListWithDuplicates = new ArrayList<>();
-        ArrayList<String> brandListNoDuplicates = new ArrayList<>();
-        for (Apparel item : wardrobe.getApparels()) {
-            brandListWithDuplicates.add(item.getBrandName());
-        }
-        for (String str: brandListWithDuplicates) {
-            int duplicates = 0;
-            for (String string: brandListNoDuplicates) {
-                if (string.equals(str)) {
-                    duplicates++;
-                }
-            }
-            if (duplicates == 0) {
-                brandListNoDuplicates.add(str);
-            }
-        }
-        for (String str: brandListNoDuplicates) {
+        ArrayList<String> targetList = wardrobe.getBrandList();
+
+        for (String str: targetList) {
             System.out.println(str);
         }
 

@@ -126,5 +126,27 @@ public class Wardrobe {
         return this.apparels;
     }
 
+    // EFFECTS: return a list of brand names with no duplicates
+    public ArrayList<String> getBrandList() {
+        ArrayList<String> brandListWithDuplicates = new ArrayList<>();
+        ArrayList<String> brandListNoDuplicates = new ArrayList<>();
+        for (Apparel item : apparels) {
+            brandListWithDuplicates.add(item.getBrandName());
+        }
+        for (String str: brandListWithDuplicates) {
+            int duplicates = 0;
+            for (String string: brandListNoDuplicates) {
+                if (string.equals(str)) {
+                    duplicates++;
+                }
+            }
+            if (duplicates == 0) {
+                brandListNoDuplicates.add(str);
+            }
+        }
+        return brandListNoDuplicates;
+
+    }
+
 
 }

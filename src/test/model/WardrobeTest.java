@@ -116,6 +116,13 @@ public class WardrobeTest {
         testWardrobe.addAnItem(testApparelZ);
         assertEquals(5, testWardrobe.getNumItems(2024, 2098));
 
+    }
+
+    @Test
+    public void testGetBrandList() {
+        assertEquals(5, testWardrobe.getBrandList().size());
+        testWardrobe.addAnItem(testApparelA);
+        assertEquals(5, testWardrobe.getBrandList().size());
 
     }
 
