@@ -5,7 +5,7 @@ public class Date {
     private final int day;
     private final int year;
 
-    //Requires： 1<= month <= 12; 1<=day<=31
+    //Requires: 1<= month <= 12; 1<=day<=31
     //Effects: create a date
     public Date(int month, int day, int year) {
         this.month = month;
