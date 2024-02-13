@@ -33,6 +33,7 @@ Therefore, I am interested in building an app to track my wardrobe collection.
 - I want to be able to add an item to my collection and specify its category, name, brand, size, price paid, date of purchase and sold price (if applicable).
 - I want to be able to delete items from my collection.
 - I want to be able to view the items by categories, brands, or price range.
-- I want to be able to know how much I spend on apparel every year 
+- I want to be able to know how much I spend on apparel every year.
+- I want to know my favorite brand.
 
 
