@@ -11,9 +11,7 @@ It allows users to keep track many features of their apparel collection, includi
 - size
 - price paid
 - sold price (if applicable)
-- place of purchase
 - date of purchase
-- user's description/feedback
 - more to come...
 
 Beyond simply keeping track of the wardrobe collection, the app also provides insightful 
@@ -32,10 +30,9 @@ Therefore, I am interested in building an app to track my wardrobe collection.
 
 ## User Stories
 - I want to be able to view all of all my apparel items in one page.
-- I want to be able to add an item to my collection and specify its category, name, brand, size, price paid,
-place of purchase, date of purchase and sold price (if applicable).
+- I want to be able to add an item to my collection and specify its category, name, brand, size, price paid, date of purchase and sold price (if applicable).
 - I want to be able to delete items from my collection.
 - I want to be able to view the items by categories, brands, or price range.
-- I want to be able to know how much I spend on apparel every year/month. 
+- I want to be able to know how much I spend on apparel every year 
 
 

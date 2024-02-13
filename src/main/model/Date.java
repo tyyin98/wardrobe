@@ -1,9 +1,9 @@
 package model;
 
 public class Date {
-    private int month;
-    private int day;
-    private int year;
+    private final int month;
+    private final int day;
+    private final int year;
 
     //Requires： 1<= month <= 12; 1<=day<=31
     //Effects: create a date
@@ -19,7 +19,7 @@ public class Date {
 
     @SuppressWarnings("methodlength")
     public String getDateLong() {
-        String monthStr = "";
+        String monthStr;
         if (month == 1) {
             monthStr = "January";
         } else if (month == 2) {
