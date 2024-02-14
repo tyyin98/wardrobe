@@ -231,7 +231,7 @@ public class WardrobeApp {
         System.out.println("Type the item name:");
         String itemName = input.next();
         System.out.println("Choose its category:");
-        System.out.println("[t] -> Tops [p] -> Pants [s] -> Shoes [a] -> Accessories");
+        System.out.println("[t] -> Tops  [p] -> Pants  [s] -> Shoes  [a] -> Accessories");
         String category = letterToCategory(input.next());
         System.out.println("Type the size of the item:");
         String size = input.next();
