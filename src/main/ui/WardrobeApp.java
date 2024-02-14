@@ -300,6 +300,8 @@ public class WardrobeApp {
         price = Integer.parseInt(input.next());
         Date soldDate = new Date(month, day, year);
         targetItem.sellItem(price, soldDate);
+        System.out.println("Marked as Sold! Press any button to continue...");
+        input.next();
     }
 
     // EFFECTS: displays VIEW WARDROBE Menu options to the user
