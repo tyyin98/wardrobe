@@ -147,8 +147,8 @@ public class WardrobeApp {
         String command;
 
         while (keepGoingBrand) {
-            System.out.println("\tType a brand:");
-            System.out.println("\tOr r to return");
+            System.out.println("\t[Brand Name] -> View items of this brand");
+            System.out.println("\t[     r    ] -> Return");
             printBrandList();
             command = input.next();
             if (command.equals("r")) {
@@ -175,23 +175,28 @@ public class WardrobeApp {
             displayCategoryMenu();
             categoryCommand = input.next();
             categoryCommand = categoryCommand.toLowerCase();
-            ArrayList<Apparel> targetList;
 
             if (categoryCommand.equals("t")) {
-                targetList = wardrobe.selectByCategory("Tops");
-                printWardrobe(targetList);
+                displaySelectedCategory("Tops");
             } else if (categoryCommand.equals("p")) {
-                targetList = wardrobe.selectByCategory("Pants");
-                printWardrobe(targetList);
+                displaySelectedCategory("Pants");
             } else if (categoryCommand.equals("s")) {
-                targetList = wardrobe.selectByCategory("Shoes");
-                printWardrobe(targetList);
+                displaySelectedCategory("Shoes");
+            } else if (categoryCommand.equals("a")) {
+                displaySelectedCategory("Accessories");
             } else if (categoryCommand.equals("r")) {
                 keepGoingCategory = false;
             } else {
                 System.out.println("Invalid input...");
             }
         }
+    }
+
+    // EFFECTS: Display the items in the selected category
+    private void displaySelectedCategory(String category) {
+        ArrayList<Apparel> targetList;
+        targetList = wardrobe.selectByCategory(category);
+        printWardrobe(targetList);
     }
 
     // MODIFIES: this
@@ -217,8 +222,6 @@ public class WardrobeApp {
         }
     }
 
-
-
     // MODIFIES: this
     // EFFECTS: adds an item to the wardrobe
     private void addItem() {
@@ -227,8 +230,9 @@ public class WardrobeApp {
         String brandName = input.next();
         System.out.println("Type the item name:");
         String itemName = input.next();
-        System.out.println("Type the category of the item:");
-        String category = input.next();
+        System.out.println("Choose its category:");
+        System.out.println("[t] -> Tops [p] -> Pants [s] -> Shoes [a] -> Accessories");
+        String category = letterToCategory(input.next());
         System.out.println("Type the size of the item:");
         String size = input.next();
         System.out.println("Type the price of the item:");
@@ -244,6 +248,22 @@ public class WardrobeApp {
         item.setPurchaseDate(purchaseDate);
         wardrobe.addAnItem(item);
         printWardrobe();
+    }
+
+    // EFFECTS: Convert the letter to a string of the category
+    private String letterToCategory(String letter) {
+        String category = "Apparel";
+        if (letter.equals("t")) {
+            category = "Tops";
+        } else if (letter.equals("p")) {
+            category = "Pants";
+        } else if (letter.equals("s")) {
+            category = "Shoes";
+        } else if (letter.equals("a")) {
+            category = "Accessories";
+        }
+        return category;
+
     }
 
     // MODIFIES: this
@@ -284,18 +304,18 @@ public class WardrobeApp {
 
     // EFFECTS: displays VIEW WARDROBE Menu options to the user
     private void displayViewWardrobeMenu() {
-        System.out.println("\tType item Index for its details:");
-        System.out.println("\tType f for FILTERS");
-        System.out.println("\tType r to RETURN to the HomePage");
+        System.out.println("\t[Item Index] -> Item details");
+        System.out.println("\t[     f    ] -> FILTERS");
+        System.out.println("\t[     r    ] -> RETURN to the HomePage");
     }
 
     // EFFECTS: displays EDIT WARDROBE Menu options to the user
     private void displayEditMenu() {
         System.out.println("\tSelect an operation:");
-        System.out.println("\ta -> Add an item ");
-        System.out.println("\td -> Delete an item ");
-        System.out.println("\tm -> Mark an item as sold ");
-        System.out.println("\tr -> Return to Previous Page ");
+        System.out.println("[   a   ] -> Add an item ");
+        System.out.println("[   d   ] -> Delete an item ");
+        System.out.println("[   m   ] -> Mark an item as sold ");
+        System.out.println("[   r   ] -> Return to Previous Page ");
     }
 
     // EFFECTS: display wardrobe stats and processes user input
@@ -307,7 +327,7 @@ public class WardrobeApp {
             command = input.next();
             if (command.equals("r")) {
                 keepGoingStat = false;
-            } else if (command.equals("p")) {
+            } else if (command.equals("f")) {
                 System.out.println("Type START year");
                 int startYear = Integer.parseInt(input.next());
                 System.out.println("Type START year");
@@ -329,14 +349,14 @@ public class WardrobeApp {
         String favBrand = wardrobe.getFavBrand();
         int numFavBrandItems = wardrobe.selectByBrand(favBrand).size();
 
-        System.out.println("You bought " + totalNumItems + " items with a total of $" + totalValue);
+        System.out.println("You bought " + totalNumItems + " items worth a total of $" + totalValue);
         System.out.println(favBrand + " is your favourite brand. You have "
                 + numFavBrandItems + " items of this brand.");
         System.out.println();
 
         System.out.println("You sold " + numItemsSold + " in total and made $" + revenue + " by selling them.\n");
-        System.out.println("Type r to return ");
-        System.out.println("OR type p to obtain data for a certain period");
+        System.out.println("[   r   ]   ->   Return ");
+        System.out.println("[   f   ]   ->   Filter data by time");
     }
 
     // EFFECTS: displays stats in the given time frame
@@ -378,27 +398,28 @@ public class WardrobeApp {
     private void displayMainMenu() {
         System.out.println("Welcome to Ty's wardrobe collections!");
         System.out.println("Select from:");
-        System.out.println("\tv -> VIEW Wardrobe");
-        System.out.println("\te -> EDIT Wardrobe");
-        System.out.println("\ts -> STATS");
-        System.out.println("\tq -> QUIT");
+        System.out.println("[   v   ] -> VIEW Wardrobe");
+        System.out.println("[   e   ] -> EDIT Wardrobe");
+        System.out.println("[   s   ] -> STATS");
+        System.out.println("[   q   ] -> QUIT");
     }
 
     private void displayFilterMenu() {
         System.out.println("Select from:");
-        System.out.println("\tc -> View by Categories");
-        System.out.println("\tb -> View by Brands");
-        System.out.println("\tp -> View by Price Ranges");
-        System.out.println("\ts -> View sold items");
-        System.out.println("\tr -> Return ");
+        System.out.println("[   c   ] -> View by Categories");
+        System.out.println("[   b   ] -> View by Brands");
+        System.out.println("[   p   ] -> View by Price Ranges");
+        System.out.println("[   s   ] -> View sold items");
+        System.out.println("[   r   ] -> Return ");
     }
 
     private void displayCategoryMenu() {
         System.out.println("Select a category:");
-        System.out.println("\tt -> Tops ");
-        System.out.println("\tp -> Pants ");
-        System.out.println("\ts -> Shoes ");
-        System.out.println("\tr -> Return to Previous Page ");
+        System.out.println("[   t   ] -> Tops ");
+        System.out.println("[   p   ] -> Pants ");
+        System.out.println("[   s   ] -> Shoes ");
+        System.out.println("[   a   ] -> Accessories ");
+        System.out.println("[   r   ] -> Return to Previous Page ");
     }
 
     // EFFECTS: Display all the items in the wardrobe one by one
@@ -409,6 +430,7 @@ public class WardrobeApp {
                     + " $" + item.getPricePaid()
                     + " bought on " + item.getPurchaseDate().getDateLong());
         }
+        System.out.println();
     }
 
     // EFFECTS: Display all the items in the targetList one by one
