@@ -55,6 +55,7 @@ public class WardrobeApp {
     }
 
 
+    // MODIFIES:this
     // EFFECTS: display all the apparel items and processes user input
     private void viewWardrobe() {
 
@@ -81,6 +82,7 @@ public class WardrobeApp {
         }
     }
 
+    // MODIFIES:this
     // EFFECTS: display all the Filter options items and processes user input
     private void viewFilters() {
         boolean keepGoingFilter = true;
@@ -126,6 +128,7 @@ public class WardrobeApp {
         }
     }
 
+    // MODIFIES:this
     // EFFECTS: processes user input for price range and display the results
     private void processPriceRangeCommand() {
 
@@ -141,6 +144,7 @@ public class WardrobeApp {
         printWardrobe(targetList);
     }
 
+    // MODIFIES:this
     // EFFECTS: processes user input for brands and display the results
     private void processBrandCommand() {
         boolean keepGoingBrand = true;
@@ -166,6 +170,7 @@ public class WardrobeApp {
         }
     }
 
+    // MODIFIES:this
     // EFFECTS: processes user input for category and display the results
     private void processCategoryCommand() {
         boolean keepGoingCategory = true;
@@ -320,6 +325,7 @@ public class WardrobeApp {
         System.out.println("[   r   ] -> Return to Previous Page ");
     }
 
+    // MODIFIES:this
     // EFFECTS: display wardrobe stats and processes user input
     private void viewStats() {
         boolean keepGoingStat = true;
@@ -361,6 +367,7 @@ public class WardrobeApp {
         System.out.println("[   f   ]   ->   Filter data by time");
     }
 
+    // MODIFIES:this
     // EFFECTS: displays stats in the given time frame
     private void printSpecifiedStats(int startYear, int endYear, int totalNumItemsYear, int totalValueYear) {
         System.out.println("From " + startYear + " to " + endYear);
@@ -379,6 +386,7 @@ public class WardrobeApp {
         }
     }
 
+    // MODIFIES:this
     // EFFECTS: displays item details for the selected item
     private void printItemDetails(ArrayList<Apparel> targetList, int index) {
         Apparel targetItem = targetList.get(index - 1);
