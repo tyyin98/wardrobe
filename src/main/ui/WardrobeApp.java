@@ -338,7 +338,7 @@ public class WardrobeApp {
             } else if (command.equals("f")) {
                 System.out.println("Type START year");
                 int startYear = Integer.parseInt(input.next());
-                System.out.println("Type START year");
+                System.out.println("Type END year");
                 int endYear = Integer.parseInt(input.next());
                 int totalNumItemsYear = wardrobe.getNumItems(startYear, endYear);
                 int totalValueYear = wardrobe.calcTotalValue(startYear, endYear);
@@ -405,6 +405,7 @@ public class WardrobeApp {
         input.next();
     }
 
+    // EFFECTS: displays the Main Menu
     private void displayMainMenu() {
         System.out.println("Welcome to Ty's wardrobe collections!");
         System.out.println("Select from:");
@@ -414,6 +415,7 @@ public class WardrobeApp {
         System.out.println("[   q   ] -> QUIT");
     }
 
+    // EFFECTS: displays the Filter Menu
     private void displayFilterMenu() {
         System.out.println("Select from:");
         System.out.println("[   c   ] -> View by Categories");
@@ -423,6 +425,7 @@ public class WardrobeApp {
         System.out.println("[   r   ] -> Return ");
     }
 
+    // EFFECTS: displays the Category Menu
     private void displayCategoryMenu() {
         System.out.println("Select a category:");
         System.out.println("[   t   ] -> Tops ");

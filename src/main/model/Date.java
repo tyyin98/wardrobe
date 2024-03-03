@@ -1,5 +1,6 @@
 package model;
 
+// Works like a calendar
 public class Date {
     private final int month;
     private final int day;
