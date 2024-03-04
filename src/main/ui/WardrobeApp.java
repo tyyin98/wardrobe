@@ -31,7 +31,7 @@ public class WardrobeApp {
         boolean keepGoing = true;
         String command;
 
-//        init();
+//        init(); used for PHASE 1
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         wardrobe = new Wardrobe();
@@ -456,6 +456,7 @@ public class WardrobeApp {
         System.out.println("[   r   ] -> Return to Previous Page ");
     }
 
+    // EFFECTS: displays categories menu
     private void displayChooseItsCategory() {
         System.out.println("Choose its category:");
         System.out.println("[t] -> Tops  [p] -> Pants  [s] -> Shoes  [a] -> Accessories");
@@ -485,7 +486,6 @@ public class WardrobeApp {
     // WAS USED FOR PHASE 1
     // MODIFIES: this
     // EFFECTS: initialize the wardrobe with some default items for display ;
-
     private void init() {
         Apparel apparelA = new Apparel("Dries", "Bomber Jacket", "Tops", "S", 1000, "Best bomber");
         Apparel apparelB = new Apparel("Maison", "Flared Jeans", "Pants", "29", 300, "My go-to");

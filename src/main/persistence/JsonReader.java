@@ -13,6 +13,9 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
+// Reads JSON files and load the wardrobe from it
+// Inspired by JsonReader from workroom app:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 public class JsonReader {
     private String source;
 
@@ -21,7 +24,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads wardrobe from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Wardrobe read() throws IOException {
         String jsonData = readFile(source);
@@ -41,13 +44,15 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses wardrobe from JSON object and returns it
     private Wardrobe parseWorkRoom(JSONObject jsonObject) {
         Wardrobe wd = new Wardrobe();
         addApparels(wd, jsonObject);
         return wd;
     }
 
+    // MODIFIES: wd
+    // EFFECTS: parses items from JSON object and adds them to workroom
     private void addApparels(Wardrobe wd, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("apparels");
         for (Object json : jsonArray) {
@@ -56,7 +61,7 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: wardrobe
+    // MODIFIES: wd
     // EFFECTS: parses item from JSON object and adds it to wardrobe
     private void addApparel(Wardrobe wd, JSONObject jsonObject) {
         String itemName = jsonObject.getString("itemName");

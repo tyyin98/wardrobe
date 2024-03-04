@@ -44,6 +44,7 @@ public class Apparel implements Writable {
         setSoldDate(soldDate);
     }
 
+    // EFFECTS: make an apparel copy of JSONObject and return it
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

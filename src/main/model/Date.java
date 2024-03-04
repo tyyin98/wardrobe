@@ -3,7 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-// Works like a calendar
+// Works like a calendar; helps track dat, month, year
 public class Date implements Writable {
     private final int month;
     private final int day;
@@ -17,7 +17,7 @@ public class Date implements Writable {
         this.year = year;
     }
 
-    // EFFECTS: turn a Date into a JSONObject
+    // EFFECTS: make a Date copy of JSONObject and return it
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("month", month);

@@ -182,6 +182,7 @@ public class Wardrobe implements Writable {
         return targetList;
     }
 
+    // EFFECTS: make a JSONObject of items in the wardrobe and return it
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -189,6 +190,7 @@ public class Wardrobe implements Writable {
         return json;
     }
 
+    // EFFECTS: make a JSONObject of an item in the wardrobe and return it
     public JSONArray thingiesToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Apparel i : apparels) {

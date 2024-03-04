@@ -36,4 +36,7 @@ Therefore, I am interested in building an app to track my wardrobe collection.
 - I want to be able to know how much I spend on apparel every year.
 - I want to know my favorite brand.
 
+- I want to be able to save my wardrobe to file
+- I want to be able to load my wardrobe from file
+
 
