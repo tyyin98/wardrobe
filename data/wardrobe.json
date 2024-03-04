@@ -46,5 +46,61 @@
         "description": "Not my type. Gonna sell it.",
         "category": "Pants",
         "pricePaid": 200
+    },
+    {
+        "itemName": "Ramone Sneakers",
+        "brandName": "Rick Owens",
+        "purchaseDate": {
+            "month": 1,
+            "year": 2021,
+            "day": 1
+        },
+        "size": "41.5",
+        "isSold": false,
+        "description": "MY GO-To",
+        "category": "Shoes",
+        "pricePaid": 400
+    },
+    {
+        "itemName": "Black Panther Jacket",
+        "brandName": "Yeezy",
+        "purchaseDate": {
+            "month": 1,
+            "year": 2021,
+            "day": 1
+        },
+        "size": "S",
+        "isSold": false,
+        "description": "Grail",
+        "category": "Tops",
+        "pricePaid": 350
+    },
+    {
+        "itemName": "Flared Cargo",
+        "brandName": "Vujade",
+        "purchaseDate": {
+            "month": 1,
+            "year": 2021,
+            "day": 1
+        },
+        "size": "S",
+        "isSold": false,
+        "description": "Another Grail",
+        "category": "Pants",
+        "pricePaid": 450
+    },
+    {
+        "itemName": "Wool Overcoat",
+        "brandName": "FOG",
+        "purchaseDate": {
+            "month": 10,
+            "year": 2022,
+            "day": 1
+        },
+        "size": "46",
+        "isSold": false,
+        "description": "Timeless",
+        "category": "Tops",
+        "pricePaid": 750
     }
 ]}

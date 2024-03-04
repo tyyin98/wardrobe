@@ -66,6 +66,7 @@ public class WardrobeApp {
             saveWorkRoom();
         } else if (command.equals("l")) {
             loadWardrobe();
+            printWardrobe();
         } else {
             System.out.println("Selection not valid...");
         }
