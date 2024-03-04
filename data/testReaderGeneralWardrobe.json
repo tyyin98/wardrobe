@@ -1,0 +1,36 @@
+{"apparels": [
+  {
+    "itemName": "Bomber Jacket",
+    "brandName": "Dries",
+    "purchaseDate": {
+      "month": 1,
+      "year": 2024,
+      "day": 2
+    },
+    "size": "S",
+    "isSold": false,
+    "description": "Best bomber",
+    "category": "Tops",
+    "pricePaid": 1000
+  },
+  {
+    "itemName": "Brown Raw Edge Denim",
+    "brandName": "FOG",
+    "purchaseDate": {
+      "month": 1,
+      "year": 2024,
+      "day": 2
+    },
+    "size": "30",
+    "soldDate": {
+      "month": 3,
+      "year": 2023,
+      "day": 4
+    },
+    "isSold": true,
+    "priceSold": 302,
+    "description": "not my type",
+    "category": "Pants",
+    "pricePaid": 300
+  }
+]}

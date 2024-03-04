@@ -12,8 +12,7 @@ public class ApparelTest {
 
     @BeforeEach
     public void setup() {
-        testApparelA = new Apparel("Dries", "Bomber Jacket", "Outwear", "S", 1000);
-
+        testApparelA = new Apparel("Dries", "Bomber Jacket", "Outwear", "S", 1000, "nothing");
     }
 
     @Test
@@ -23,11 +22,11 @@ public class ApparelTest {
         assertEquals("Outwear", testApparelA.getCategory());
         assertEquals("S", testApparelA.getSize());
         assertEquals(1000, testApparelA.getPricePaid());
-        assertEquals("", testApparelA.getBoughtFrom());
         assertEquals("", testApparelA.getDescription());
         assertEquals(2024, testApparelA.getPurchaseDate().getYear());
         assertEquals(1, testApparelA.getPurchaseDate().getMonth());
         assertEquals(2, testApparelA.getPurchaseDate().getDay());
+        assertEquals("nothing", testApparelA.getDescription());
         assertFalse(testApparelA.getIsSold());
     }
 
@@ -76,11 +75,7 @@ public class ApparelTest {
         assertEquals("It is cool", testApparelA.getDescription());
     }
 
-    @Test
-    public void testSetBoughFrom() {
-        testApparelA.setBoughtFrom("SSENSE");
-        assertEquals("SSENSE", testApparelA.getBoughtFrom());
-    }
+
 
     @Test
     public void testSetIsSold() {

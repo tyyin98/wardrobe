@@ -1,11 +1,13 @@
 package model;
 
 
+import org.json.JSONObject;
+import persistence.Writable;
 
 // Represents an apparel item that has name, a brand, a category,
 // a size, a price, a description added by the user, a purchase date,
 // a sold date, a sold price.
-public class Apparel {
+public class Apparel implements Writable {
 
     public static final Date DEFAULT_DATE = new Date(1, 2, 2024);
 
@@ -14,7 +16,6 @@ public class Apparel {
     private String category;
     private String size;
     private int pricePaid;
-    private String boughtFrom;
     private String description;
     private Date purchaseDate;
     private boolean isSold;
@@ -23,14 +24,13 @@ public class Apparel {
 
     // REQUIRES: brandName, itemName, category, size not empty. pricePaid not negative
     // EFFECTS: create a new apparel item
-    public Apparel(String brandName, String itemName, String category, String size, int pricePaid) {
+    public Apparel(String brandName, String itemName, String category, String size, int pricePaid, String description) {
         this.brandName = brandName;
         this.itemName = itemName;
         this.category = category;
         this.size = size;
         this.pricePaid = pricePaid;
-        this.boughtFrom = "";
-        this.description = "";
+        this.description = description;
         this.purchaseDate = DEFAULT_DATE;
         this.isSold = false;
     }
@@ -42,6 +42,26 @@ public class Apparel {
         this.isSold = true;
         setPriceSold(priceSold);
         setSoldDate(soldDate);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("itemName", itemName);
+        json.put("brandName", brandName);
+        json.put("category", category);
+        json.put("size", size);
+        json.put("pricePaid", pricePaid);
+        json.put("description", description);
+        json.put("purchaseDate", purchaseDate.toJson());
+        json.put("isSold", isSold);
+
+        if (isSold) {
+            json.put("isSold", true);
+            json.put("priceSold", priceSold);
+            json.put("soldDate", soldDate.toJson());
+        }
+        return json;
     }
 
     public String getItemName() {
@@ -62,10 +82,6 @@ public class Apparel {
 
     public int getPricePaid() {
         return this.pricePaid;
-    }
-
-    public String getBoughtFrom() {
-        return this.boughtFrom;
     }
 
     public String getDescription() {
@@ -108,9 +124,6 @@ public class Apparel {
         this.pricePaid = pricePaid;
     }
 
-    public void setBoughtFrom(String boughtFrom) {
-        this.boughtFrom = boughtFrom;
-    }
 
     public void setDescription(String description) {
         this.description = description;

@@ -3,12 +3,20 @@ package ui;
 import model.Apparel;
 import model.Wardrobe;
 import model.Date;
+import persistence.JsonWriter;
+import persistence.JsonReader;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 // Wardrobe application
 public class WardrobeApp {
+    private static final String JSON_STORE = "./data/wardrobe.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
     private Wardrobe wardrobe;
     private Scanner input;
 
@@ -23,7 +31,12 @@ public class WardrobeApp {
         boolean keepGoing = true;
         String command;
 
-        init();
+//        init();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        wardrobe = new Wardrobe();
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
 
         while (keepGoing) {
             displayMainMenu();
@@ -49,9 +62,14 @@ public class WardrobeApp {
             editWardrobe();
         } else if (command.equals("s")) {
             viewStats();
+        } else if (command.equals("f")) {
+            saveWorkRoom();
+        } else if (command.equals("l")) {
+            loadWardrobe();
         } else {
             System.out.println("Selection not valid...");
         }
+
     }
 
 
@@ -217,6 +235,7 @@ public class WardrobeApp {
                 keepGoingEdit = false;
             } else if (command.equals("a")) {
                 addItem();
+                printWardrobe();
             } else if (command.equals("d")) {
                 deleteItem();
             } else if (command.equals("m")) {
@@ -230,13 +249,11 @@ public class WardrobeApp {
     // MODIFIES: this
     // EFFECTS: adds an item to the wardrobe
     private void addItem() {
-
         System.out.println("Type the brand name of the item:");
         String brandName = input.next();
         System.out.println("Type the item name:");
         String itemName = input.next();
-        System.out.println("Choose its category:");
-        System.out.println("[t] -> Tops  [p] -> Pants  [s] -> Shoes  [a] -> Accessories");
+        displayChooseItsCategory();
         String category = letterToCategory(input.next());
         System.out.println("Type the size of the item:");
         String size = input.next();
@@ -248,11 +265,12 @@ public class WardrobeApp {
         int month = Integer.parseInt(input.next());
         System.out.println("On which day did you get it?");
         int day = Integer.parseInt(input.next());
-        Apparel item = new Apparel(brandName, itemName, category, size, pricePaid);
+        System.out.println("Anything you want to say about it?");
+        String description = input.next();
+        Apparel item = new Apparel(brandName, itemName, category, size, pricePaid, description);
         Date purchaseDate = new Date(month, day, year);
         item.setPurchaseDate(purchaseDate);
         wardrobe.addAnItem(item);
-        printWardrobe();
     }
 
     // EFFECTS: Convert the letter to a string of the category
@@ -395,6 +413,7 @@ public class WardrobeApp {
         System.out.println("\tSize: " + targetItem.getSize());
         System.out.println("\tPrice: $" + targetItem.getPricePaid());
         System.out.println("\tBought on: " + targetItem.getPurchaseDate().getDateLong());
+        System.out.println("\tComments: " + targetItem.getDescription());
 
         if (targetItem.getIsSold()) {
             System.out.println("\tSold on: "
@@ -412,6 +431,8 @@ public class WardrobeApp {
         System.out.println("[   v   ] -> VIEW Wardrobe");
         System.out.println("[   e   ] -> EDIT Wardrobe");
         System.out.println("[   s   ] -> STATS");
+        System.out.println("[   f   ] -> save wardrobe to file");
+        System.out.println("[   l   ] -> load wardrobe from file");
         System.out.println("[   q   ] -> QUIT");
     }
 
@@ -435,6 +456,12 @@ public class WardrobeApp {
         System.out.println("[   r   ] -> Return to Previous Page ");
     }
 
+    private void displayChooseItsCategory() {
+        System.out.println("Choose its category:");
+        System.out.println("[t] -> Tops  [p] -> Pants  [s] -> Shoes  [a] -> Accessories");
+
+    }
+
     // EFFECTS: Display all the items in the wardrobe one by one
     private void printWardrobe() {
         ArrayList<Apparel> apparelList = wardrobe.getApparels();
@@ -455,16 +482,18 @@ public class WardrobeApp {
         }
     }
 
+    // WAS USED FOR PHASE 1
     // MODIFIES: this
-    // EFFECTS: initialize the wardrobe with some default items for display
+    // EFFECTS: initialize the wardrobe with some default items for display ;
+
     private void init() {
-        Apparel apparelA = new Apparel("Dries", "Bomber Jacket", "Tops", "S", 1000);
-        Apparel apparelB = new Apparel("Maison", "Flared Jeans", "Pants", "29", 300);
-        Apparel apparelC = new Apparel("Rick", "Ramone Sneakers", "Shoes", "41.5", 400);
-        Apparel apparelD = new Apparel("Yeezy", "Bomber Jacket", "Tops", "S", 350);
-        Apparel apparelE = new Apparel("Vujade", "Flared Cargo", "Pants", "S", 450);
-        Apparel apparelF = new Apparel("FOG", "Wool Overcoat", "Tops", "46", 750);
-        Apparel apparelG = new Apparel("FOG", "Brown Raw Edge Denim", "Pants", "30", 300);
+        Apparel apparelA = new Apparel("Dries", "Bomber Jacket", "Tops", "S", 1000, "Best bomber");
+        Apparel apparelB = new Apparel("Maison", "Flared Jeans", "Pants", "29", 300, "My go-to");
+        Apparel apparelC = new Apparel("Rick", "Ramone Sneakers", "Shoes", "41.5", 400, "Another go-to");
+        Apparel apparelD = new Apparel("Yeezy", "Bomber Jacket", "Tops", "S", 350, "GOAT");
+        Apparel apparelE = new Apparel("Vujade", "Flared Cargo", "Pants", "S", 450, "Grail!");
+        Apparel apparelF = new Apparel("FOG", "Wool Overcoat", "Tops", "46", 750, "Cool");
+        Apparel apparelG = new Apparel("FOG", "Brown Raw Edge Denim", "Pants", "30", 300, "not my type");
         apparelG.sellItem(302, new Date(3, 4, 2023));
         apparelB.setPurchaseDate(new Date(12, 30, 2025));
 
@@ -479,6 +508,29 @@ public class WardrobeApp {
 
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads wardrobe from file
+    private void loadWardrobe() {
+        try {
+            wardrobe = jsonReader.read();
+            System.out.println("Loaded from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: saves the workroom to file
+    private void saveWorkRoom() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(wardrobe);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
     }
 
 

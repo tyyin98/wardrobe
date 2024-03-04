@@ -17,11 +17,11 @@ public class WardrobeTest {
 
     @BeforeEach
     public void setup() {
-        testApparelA = new Apparel("Dries", "Bomber Jacket", "Outwear", "S", 1000);
-        testApparelB = new Apparel("Maison", "Flared Jeans", "Jeans", "29", 300);
-        testApparelC = new Apparel("Rick", "Ramone Sneakers", "Sneakers", "41.5", 400);
-        testApparelD = new Apparel("Yeezy", "Bomber Jacket", "Outwear", "S", 350);
-        testApparelE = new Apparel("Vujade", "Flared Cargo", "Pants", "S", 450);
+        testApparelA = new Apparel("Dries", "Bomber Jacket", "Outwear", "S", 1000, "hello");
+        testApparelB = new Apparel("Maison", "Flared Jeans", "Jeans", "29", 300, "world");
+        testApparelC = new Apparel("Rick", "Ramone Sneakers", "Sneakers", "41.5", 400, "good");
+        testApparelD = new Apparel("Yeezy", "Bomber Jacket", "Outwear", "S", 350, "bad");
+        testApparelE = new Apparel("Vujade", "Flared Cargo", "Pants", "S", 450, "foo");
 
         testWardrobe = new Wardrobe();
         testWardrobe.addAnItem(testApparelA);
@@ -112,7 +112,7 @@ public class WardrobeTest {
     public void testGetNumItemsByYear() {
         assertEquals(0, testWardrobe.getNumItems(2025, 2025));
         assertEquals(5, testWardrobe.getNumItems(2024, 2025));
-        Apparel testApparelZ = new Apparel("Vujade", "Flared Cargo", "Pants", "S", 450);
+        Apparel testApparelZ = new Apparel("Vujade", "Flared Cargo", "Pants", "S", 450,"Z");
         testApparelZ.setPurchaseDate(new Date(1,1, 2099));
         testWardrobe.addAnItem(testApparelZ);
         assertEquals(5, testWardrobe.getNumItems(2024, 2098));

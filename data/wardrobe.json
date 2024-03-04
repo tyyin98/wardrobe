@@ -1,0 +1,50 @@
+{"apparels": [
+    {
+        "itemName": "Bomber Jacket",
+        "brandName": "Dries Van Noten",
+        "purchaseDate": {
+            "month": 12,
+            "year": 2023,
+            "day": 25
+        },
+        "size": "S",
+        "isSold": false,
+        "description": "Best Bomber Jacket",
+        "category": "Tops",
+        "pricePaid": 1000
+    },
+    {
+        "itemName": "Flared Jeans",
+        "brandName": "Maison Margiela",
+        "purchaseDate": {
+            "month": 6,
+            "year": 2022,
+            "day": 15
+        },
+        "size": "29",
+        "isSold": false,
+        "description": "My Go-to",
+        "category": "Pants",
+        "pricePaid": 300
+    },
+    {
+        "itemName": "Brown Raw Edge Denim",
+        "brandName": "FOG",
+        "purchaseDate": {
+            "month": 12,
+            "year": 2023,
+            "day": 10
+        },
+        "size": "30",
+        "soldDate": {
+            "month": 12,
+            "year": 31,
+            "day": 2023
+        },
+        "isSold": true,
+        "priceSold": 300,
+        "description": "Not my type. Gonna sell it.",
+        "category": "Pants",
+        "pricePaid": 200
+    }
+]}

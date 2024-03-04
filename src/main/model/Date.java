@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Works like a calendar
-public class Date {
+public class Date implements Writable {
     private final int month;
     private final int day;
     private final int year;
@@ -12,6 +15,15 @@ public class Date {
         this.month = month;
         this.day = day;
         this.year = year;
+    }
+
+    // EFFECTS: turn a Date into a JSONObject
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("month", month);
+        json.put("day", day);
+        json.put("year", year);
+        return json;
     }
 
     // EFFECTS: Return date in a short format

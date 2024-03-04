@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represents a wardrobe with a collection of apparel items
-public class Wardrobe {
+public class Wardrobe implements Writable {
 
     private final ArrayList<Apparel> apparels;
 
@@ -166,6 +170,7 @@ public class Wardrobe {
         return favBrand;
     }
 
+
     // EFFECTS: Returns a list of items that have been sold
     public ArrayList<Apparel> getSoldItems() {
         ArrayList<Apparel> targetList = new ArrayList<>();
@@ -176,5 +181,21 @@ public class Wardrobe {
         }
         return targetList;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("apparels", thingiesToJson());
+        return json;
+    }
+
+    public JSONArray thingiesToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Apparel i : apparels) {
+            jsonArray.put(i.toJson());
+        }
+        return jsonArray;
+    }
+
 
 }
