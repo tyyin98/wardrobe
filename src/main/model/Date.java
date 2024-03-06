@@ -3,7 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-// Works like a calendar; helps track dat, month, year
+// Works like a calendar; helps track date, month, year
 public class Date implements Writable {
     private final int month;
     private final int day;
