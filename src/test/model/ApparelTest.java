@@ -22,7 +22,7 @@ public class ApparelTest {
         assertEquals("Outwear", testApparelA.getCategory());
         assertEquals("S", testApparelA.getSize());
         assertEquals(1000, testApparelA.getPricePaid());
-        assertEquals("", testApparelA.getDescription());
+        assertEquals("nothing", testApparelA.getDescription());
         assertEquals(2024, testApparelA.getPurchaseDate().getYear());
         assertEquals(1, testApparelA.getPurchaseDate().getMonth());
         assertEquals(2, testApparelA.getPurchaseDate().getDay());

@@ -1,106 +1,106 @@
 {"apparels": [
-  {
-    "itemName": "Bomber Jacket",
-    "brandName": "Dries Van Noten",
-    "purchaseDate": {
-      "month": 12,
-      "year": 2023,
-      "day": 25
+    {
+        "itemName": "Bomber Jacket",
+        "brandName": "Dries Van Noten",
+        "purchaseDate": {
+            "month": 12,
+            "year": 2023,
+            "day": 25
+        },
+        "size": "S",
+        "isSold": false,
+        "description": "Best Bomber Jacket",
+        "category": "Tops",
+        "pricePaid": 1000
     },
-    "size": "S",
-    "isSold": false,
-    "description": "Best Bomber Jacket",
-    "category": "Tops",
-    "pricePaid": 1000
-  },
-  {
-    "itemName": "Flared Jeans",
-    "brandName": "Maison Margiela",
-    "purchaseDate": {
-      "month": 6,
-      "year": 2022,
-      "day": 15
+    {
+        "itemName": "Flared Jeans",
+        "brandName": "Maison Margiela",
+        "purchaseDate": {
+            "month": 6,
+            "year": 2022,
+            "day": 15
+        },
+        "size": "29",
+        "isSold": false,
+        "description": "My Go-to",
+        "category": "Pants",
+        "pricePaid": 300
     },
-    "size": "29",
-    "isSold": false,
-    "description": "My Go-to",
-    "category": "Pants",
-    "pricePaid": 300
-  },
-  {
-    "itemName": "Brown Raw Edge Denim",
-    "brandName": "FOG",
-    "purchaseDate": {
-      "month": 12,
-      "year": 2023,
-      "day": 10
+    {
+        "itemName": "Brown Raw Edge Denim",
+        "brandName": "FOG",
+        "purchaseDate": {
+            "month": 12,
+            "year": 2023,
+            "day": 10
+        },
+        "size": "30",
+        "soldDate": {
+            "month": 12,
+            "year": 31,
+            "day": 2023
+        },
+        "isSold": true,
+        "priceSold": 300,
+        "description": "Not my type. Gonna sell it.",
+        "category": "Pants",
+        "pricePaid": 200
     },
-    "size": "30",
-    "soldDate": {
-      "month": 12,
-      "year": 31,
-      "day": 2023
+    {
+        "itemName": "Ramone Sneakers",
+        "brandName": "Rick Owens",
+        "purchaseDate": {
+            "month": 1,
+            "year": 2021,
+            "day": 1
+        },
+        "size": "41.5",
+        "isSold": false,
+        "description": "MY GO-To",
+        "category": "Shoes",
+        "pricePaid": 400
     },
-    "isSold": true,
-    "priceSold": 300,
-    "description": "Not my type. Gonna sell it.",
-    "category": "Pants",
-    "pricePaid": 200
-  },
-  {
-    "itemName": "Ramone Sneakers",
-    "brandName": "Rick Owens",
-    "purchaseDate": {
-      "month": 1,
-      "year": 2021,
-      "day": 1
+    {
+        "itemName": "Black Panther Jacket",
+        "brandName": "Yeezy",
+        "purchaseDate": {
+            "month": 1,
+            "year": 2021,
+            "day": 1
+        },
+        "size": "S",
+        "isSold": false,
+        "description": "Grail",
+        "category": "Tops",
+        "pricePaid": 350
     },
-    "size": "41.5",
-    "isSold": false,
-    "description": "MY GO-To",
-    "category": "Shoes",
-    "pricePaid": 400
-  },
-  {
-    "itemName": "Black Panther Jacket",
-    "brandName": "Yeezy",
-    "purchaseDate": {
-      "month": 1,
-      "year": 2021,
-      "day": 1
+    {
+        "itemName": "Flared Cargo",
+        "brandName": "Vujade",
+        "purchaseDate": {
+            "month": 1,
+            "year": 2021,
+            "day": 1
+        },
+        "size": "S",
+        "isSold": false,
+        "description": "Another Grail",
+        "category": "Pants",
+        "pricePaid": 450
     },
-    "size": "S",
-    "isSold": false,
-    "description": "Grail",
-    "category": "Tops",
-    "pricePaid": 350
-  },
-  {
-    "itemName": "Flared Cargo",
-    "brandName": "Vujade",
-    "purchaseDate": {
-      "month": 1,
-      "year": 2021,
-      "day": 1
-    },
-    "size": "S",
-    "isSold": false,
-    "description": "Another Grail",
-    "category": "Pants",
-    "pricePaid": 450
-  },
-  {
-    "itemName": "Wool Overcoat",
-    "brandName": "FOG",
-    "purchaseDate": {
-      "month": 10,
-      "year": 2022,
-      "day": 1
-    },
-    "size": "46",
-    "isSold": false,
-    "description": "Timeless",
-    "category": "Tops",
-    "pricePaid": 750
-  }
+    {
+        "itemName": "Wool Overcoat",
+        "brandName": "FOG",
+        "purchaseDate": {
+            "month": 10,
+            "year": 2022,
+            "day": 1
+        },
+        "size": "46",
+        "isSold": false,
+        "description": "Timeless",
+        "category": "Tops",
+        "pricePaid": 750
+    }
 ]}
