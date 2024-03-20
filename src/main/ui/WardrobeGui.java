@@ -18,38 +18,78 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WardrobeGui extends JFrame implements ActionListener {
-    private JLabel label;
-    private JTextField field;
+
+    private static final String JSON_STORE = "./data/wardrobe.json";
+    private Wardrobe wardrobe;
+
+    private JsonReader jsonReader;
+
+    private JList<String> apparelJList;
+    private DefaultListModel<String> model;
+    private JPanel bottomPanel;
+    private JButton loadButton;
+    private JButton saveButton;
+
 
     public WardrobeGui() {
+
         super("Wardrobe");
+        initializeFrame();
+        initializeJList();
+        initializeBottomPanel();
+
+        jsonReader = new JsonReader(JSON_STORE);
+        wardrobe = null;
+
+        pack();
+        setVisible(true);
+    }
+
+    public void initializeJList() {
+        model = new DefaultListModel<>();
+        apparelJList = new JList<>(model);
+        add(apparelJList, BorderLayout.NORTH);
+    }
+
+    public void initializeFrame() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(1024, 792));
-        ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
-        setLayout(new FlowLayout());
-        JButton btn = new JButton("Change");
-        btn.setActionCommand("myButton");
-        btn.addActionListener(this); // Sets "this" object as an action listener for btn
-        // so that when the btn is clicked,
-        // this.actionPerformed(ActionEvent e) will be called.
-        // You could also set a different object, if you wanted
-        // a different object to respond to the button click
-        label = new JLabel("flag");
-        field = new JTextField(5);
-        add(field);
-        add(btn);
-        add(label);
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
+        setLayout(new BorderLayout());
         setResizable(true);
     }
 
+
+    public void initializeBottomPanel() {
+        bottomPanel = new JPanel();
+        loadButton = new JButton("load");
+        saveButton = new JButton("save");
+        bottomPanel.add(loadButton);
+        bottomPanel.add(saveButton);
+        loadButton.addActionListener(this);
+        this.add(bottomPanel, BorderLayout.SOUTH);
+    }
+
+
+    @Override
     //This is the method that is called when the JButton btn is clicked
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("myButton")) {
-            label.setText(field.getText());
+        if (e.getSource() == loadButton) {
+            System.out.println("LOADING!");
+            loadApparels();
         }
     }
 
+    public void loadApparels() {
+        model.clear();
+        try {
+            wardrobe = jsonReader.read();
+            ArrayList<Apparel> apparels = wardrobe.getApparels();
+
+            for (Apparel item: apparels) {
+                model.addElement(item.getBrandName() + " ｜ " + item.getItemName() + " ｜ $" + item.getPricePaid());
+            }
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
 }

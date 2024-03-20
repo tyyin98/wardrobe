@@ -186,12 +186,12 @@ public class Wardrobe implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("apparels", thingiesToJson());
+        json.put("apparels", apparelToJson());
         return json;
     }
 
     // EFFECTS: make a JSONObject of an item in the wardrobe and return it
-    public JSONArray thingiesToJson() {
+    public JSONArray apparelToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Apparel i : apparels) {
             jsonArray.put(i.toJson());
