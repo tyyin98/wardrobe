@@ -188,9 +188,17 @@ public class WardrobeGui extends JFrame  {
             }
             if (e.getSource() == deleteButton) {
                 System.out.println("delete");
+                deleteItem(apparelJList.getSelectedValue());
             }
         }
     }
+
+    public void deleteItem(Apparel item) {
+        model.removeElement(item);
+        wardrobe.getApparels().remove(item);
+    }
+
+
 
     public class DisplayPanel extends JPanel {
 
@@ -304,8 +312,8 @@ public class WardrobeGui extends JFrame  {
             }
             if (e.getSource() == submitButton) {
                 Apparel item = createApparel();
-                model.addElement(item);
                 wardrobe.addAnItem(item);
+                model.addElement(item);
                 resetTextFields();
             }
             repaint();
