@@ -63,7 +63,7 @@ public class WardrobeApp {
         } else if (command.equals("s")) {
             viewStats();
         } else if (command.equals("f")) {
-            saveWorkRoom();
+            saveWardrobe();
         } else if (command.equals("l")) {
             loadWardrobe();
             printWardrobe();
@@ -523,7 +523,7 @@ public class WardrobeApp {
     }
 
     // EFFECTS: saves the workroom to file
-    private void saveWorkRoom() {
+    private void saveWardrobe() {
         try {
             jsonWriter.open();
             jsonWriter.write(wardrobe);

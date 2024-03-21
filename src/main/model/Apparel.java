@@ -44,6 +44,11 @@ public class Apparel implements Writable {
         setSoldDate(soldDate);
     }
 
+    @Override
+    public String toString() {
+        return this.getBrandName() + " | " + this.getItemName() + " ｜ $" + this.getPricePaid();
+    }
+
     // EFFECTS: make an apparel copy of JSONObject and return it
     @Override
     public JSONObject toJson() {

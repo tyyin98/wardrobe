@@ -9,9 +9,11 @@ import model.Apparel;
 import model.Date;
 import model.Wardrobe;
 import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -20,8 +22,8 @@ public class WardrobeGui extends JFrame  {
     private static final String JSON_STORE = "./data/wardrobe.json";
 
 
-    private JList<String> apparelJList;
-    private DefaultListModel<String> model;
+    private JList<Apparel> apparelJList;
+    private DefaultListModel<Apparel> model;
 
 
     private DisplayPanel displayPanel;
@@ -31,6 +33,7 @@ public class WardrobeGui extends JFrame  {
 
     private Wardrobe wardrobe;
     private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
 
     public WardrobeGui() {
@@ -43,6 +46,7 @@ public class WardrobeGui extends JFrame  {
         initializeBottomPanel();
 
         wardrobe = null;
+        jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
 
@@ -61,9 +65,11 @@ public class WardrobeGui extends JFrame  {
 
     // MODIFIES: this
     // EFFECTS:  adds DisplayPanel to the center of the Frame
-    public void renderDisplayPanel() {
+    public void renderDisplayPanel(Apparel item) {
         remove(addItemPanel);
+        displayPanel.fillDisplayPanelWithContentPanel(item);
         add(displayPanel, BorderLayout.CENTER);
+        displayPanel.setVisible(true);
         revalidate();
         repaint();
     }
@@ -93,17 +99,12 @@ public class WardrobeGui extends JFrame  {
             public void mouseClicked(MouseEvent e) {
                 // Check for double-click
                 if (e.getClickCount() == 2) {
-
                     // Get the index of the clicked item
                     int index = apparelJList.locationToIndex(e.getPoint());
-
                     // Get the selected item
-                    String selectedItem = apparelJList.getModel().getElementAt(index);
+                    Apparel selectedItem = apparelJList.getModel().getElementAt(index);
 //                    JOptionPane.showMessageDialog(null, "Double-clicked on: " + selectedItem); // Trigger your event
-
-                    displayPanel.displayItem(index);
-                    renderDisplayPanel();
-                    displayPanel.setVisible(true);
+                    renderDisplayPanel(selectedItem);
                 }
             }
         };
@@ -121,15 +122,25 @@ public class WardrobeGui extends JFrame  {
     // EFFECTS: load apparels from JSON file to model
     public void loadApparels() {
         model.clear();
-        displayPanel.setVisible(false);
         try {
             wardrobe = jsonReader.read();
             ArrayList<Apparel> apparels = wardrobe.getApparels();
             for (Apparel item: apparels) {
-                model.addElement(item.getBrandName() + " ｜ " + item.getItemName() + " ｜ $" + item.getPricePaid());
+                model.addElement(item);
             }
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    public void saveWardrobeToJson() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(wardrobe);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 
@@ -169,7 +180,8 @@ public class WardrobeGui extends JFrame  {
                 loadApparels();
             }
             if (e.getSource() == saveButton) {
-                System.out.println("saved");
+                System.out.println("saving");
+                saveWardrobeToJson();
             }
             if (e.getSource() == addButton) {
                 renderAddItemPanel();
@@ -181,30 +193,39 @@ public class WardrobeGui extends JFrame  {
     }
 
     public class DisplayPanel extends JPanel {
-        private JLabel brandLabel;
-        private JLabel itemLabel;
 
+        // EFFECTS: creates a new panel, and sets LayOut
         DisplayPanel() {
             super();
-            brandLabel = new JLabel();
-            add(brandLabel);
-
-            itemLabel = new JLabel();
-            add(itemLabel);
-
+            setLayout(new GridLayout(11, 1));
             setBackground(new Color(238, 238,228));
-            setVisible(false);
-        }
-
-        public void displayItem(int index) {
-            Apparel item = wardrobe.getApparels().get(index);
-            String brandName = item.getBrandName();
-            String itemName = item.getItemName();
-            brandLabel.setText(brandName);
-            itemLabel.setText(itemName);
         }
 
 
+        // EFFECTS: put given piece of item info into a panel with its description
+        // EFFECTS: and return the panel
+        public JPanel createContentPanel(String desc, String info) {
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(2,1));
+            panel.add(new JLabel(desc));
+            panel.add(new JLabel(info));
+            return panel;
+        }
+
+        public void fillDisplayPanelWithContentPanel(Apparel item) {
+            removeAll();
+            add(createContentPanel("Designer: ", item.getBrandName()));
+            add(createContentPanel("Item: ", item.getItemName()));
+            add(createContentPanel("Category: ", item.getCategory()));
+            add(createContentPanel("Size: ", item.getSize()));
+            add(createContentPanel("Price: $", String.valueOf(item.getPricePaid())));
+            add(createContentPanel("Description: ", item.getDescription()));
+            add(createContentPanel("Date of Purchase: ", item.getPurchaseDate().getDateLong()));
+            if (item.getIsSold()) {
+                add(createContentPanel("Sold for: $", String.valueOf(item.getPriceSold())));
+                add(createContentPanel("Date of Sale: ", item.getSoldDate().getDateLong()));
+            }
+        }
     }
 
     public class AddItemPanel extends JPanel implements ActionListener {
@@ -226,7 +247,7 @@ public class WardrobeGui extends JFrame  {
         JButton submitButton = new JButton("submit");
 
         public AddItemPanel() {
-            this.setLayout(new GridLayout(8, 2));
+            this.setLayout(new GridLayout(16, 1));
             initializeAddItemPanel();
         }
 
@@ -252,7 +273,7 @@ public class WardrobeGui extends JFrame  {
             priceSoldField.setEnabled(false);
             putElementIntoPanel(priceSoldField, "Sold price: ");
             submitButton.addActionListener(this);
-            putElementIntoPanel(submitButton, "Sold price: ");
+            putElementIntoPanel(submitButton, "");
             this.setVisible(true);
         }
 
@@ -283,11 +304,9 @@ public class WardrobeGui extends JFrame  {
             }
             if (e.getSource() == submitButton) {
                 Apparel item = createApparel();
-                model.addElement(item.getBrandName() + " ｜ " + item.getItemName() + " ｜ $" + item.getPricePaid());
+                model.addElement(item);
                 wardrobe.addAnItem(item);
                 resetTextFields();
-
-
             }
             repaint();
             revalidate();
@@ -333,6 +352,4 @@ public class WardrobeGui extends JFrame  {
             return newApparel;
         }
     }
-
-
 }
