@@ -46,7 +46,7 @@ public class Apparel implements Writable {
 
     @Override
     public String toString() {
-        return this.getBrandName() + " | " + this.getItemName() + " ｜ $" + this.getPricePaid();
+        return this.getBrandName() + " | " + this.getItemName() + " | $" + this.getPricePaid();
     }
 
     // EFFECTS: make an apparel copy of JSONObject and return it

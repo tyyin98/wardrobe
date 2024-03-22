@@ -32,7 +32,7 @@ public class ApparelTest {
 
     @Test
     public void testToString() {
-        assertEquals("Dries | Bomber Jacket ｜ $1000", testApparelA.toString());
+        assertEquals("Dries | Bomber Jacket | $1000", testApparelA.toString());
 
     }
 
