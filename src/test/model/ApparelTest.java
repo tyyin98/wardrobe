@@ -31,6 +31,12 @@ public class ApparelTest {
     }
 
     @Test
+    public void testToString() {
+        assertEquals("Dries | Bomber Jacket ｜ $1000", testApparelA.toString());
+
+    }
+
+    @Test
     public void testSellItem(){
         Date soldDate = new Date(2, 11, 2024);
         testApparelA.sellItem(1200, soldDate);

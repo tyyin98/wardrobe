@@ -39,12 +39,12 @@ public class WardrobeGui extends JFrame  {
         super("Wardrobe");
         initializeFrame();
         initializeJList();
-        initializeDisplayPanel();
-        initializeAddItemPanel();
+        displayPanel = new DisplayPanel();
+        addItemPanel = new AddItemPanel();
         initializeBottomPanel();
         filtersPanel = new FiltersPanel();
 
-        wardrobe = null;
+        wardrobe = new Wardrobe();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
@@ -52,14 +52,13 @@ public class WardrobeGui extends JFrame  {
         setVisible(true);
     }
 
-    public void initializeAddItemPanel() {
-        addItemPanel = new AddItemPanel();
+    public void syncJListWithWardrobe() {
+        model.clear();
+        for (Apparel item: wardrobe.getApparels()) {
+            model.addElement(item);
+        }
     }
 
-    // EFFECTS:  creates DisplayPanel
-    public void initializeDisplayPanel() {
-        displayPanel = new DisplayPanel();
-    }
 
     // MODIFIES: this
     // EFFECTS:  adds DisplayPanel to the center of the Frame
@@ -94,8 +93,8 @@ public class WardrobeGui extends JFrame  {
     public void initializeJList() {
         model = new DefaultListModel<>();
         apparelJList = new JList<>(model);
-//        apparelJList.setPreferredSize(new Dimension(1000, 200));
         JScrollPane scrollPane = new JScrollPane(apparelJList);
+        scrollPane.setPreferredSize(new Dimension(1024, 200));
 
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
@@ -253,10 +252,7 @@ public class WardrobeGui extends JFrame  {
         // EFFECTS: creates a new panel, and sets LayOut
         DisplayPanel() {
             super();
-
-//            setBackground(new Color(238, 238,228));
         }
-
 
         // EFFECTS: put given piece of item info into a panel with its description
         // EFFECTS: and return the panel
@@ -342,7 +338,6 @@ public class WardrobeGui extends JFrame  {
             add(panel);
         }
 
-
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == isSoldCheckBox) {
@@ -406,7 +401,6 @@ public class WardrobeGui extends JFrame  {
                 newApparel.setSoldDate(soldDate);
                 newApparel.setPriceSold(Integer.parseInt(priceSoldField.getText()));
             }
-
             return newApparel;
         }
     }
@@ -426,15 +420,17 @@ public class WardrobeGui extends JFrame  {
         JCheckBox soldCheckBox = new JCheckBox("Select sold items");
 
         JButton submitFilerButton = new JButton("Submit Filter");
+        JButton removeFilterButton = new JButton("Remove Filter");
 
         // EFFECTS: creates FiltersPanel, and sets layout
         public FiltersPanel() {
-            super(new GridLayout(4,1));
+            super(new GridLayout(5,1));
             setLayout(null);
             initPriceRangePanel();
             initBrandNamePanel();
             initSoldPanel();
             initSubmitButtonPanel();
+            initRemoveButtonPanel();
         }
 
         public void initPriceRangePanel() {
@@ -480,11 +476,21 @@ public class WardrobeGui extends JFrame  {
             this.add(submitBtnPanel);
         }
 
+        public void initRemoveButtonPanel() {
+            JPanel removeBtnPanel = new JPanel(new GridLayout(1,1));
+            removeBtnPanel.setBounds(0, 190, 1000, 40);
+            removeFilterButton.addActionListener(this);
+            removeBtnPanel.add(removeFilterButton);
+            this.add(removeBtnPanel);
+        }
+
 
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submitFilerButton) {
                 handleFilter();
+            } else if (e.getSource() == removeFilterButton) {
+                syncJListWithWardrobe();
             } else {
                 toggleCheckBoxes();
             }
@@ -492,15 +498,39 @@ public class WardrobeGui extends JFrame  {
 
         public void handleFilter() {
             if (priceRangeCheckBox.isSelected()) {
-                //
+                filterByPriceRange(Integer.parseInt(priceLowerBoundField.getText()),
+                        Integer.parseInt(priceHigherBoundField.getText()));
             }
             if (brandCheckBox.isSelected()) {
-                //
+                filterByBrand(brandNameField.getText());
             }
             if (soldCheckBox.isSelected()) {
-                //
+                filterBySold();
             }
+        }
 
+        public void filterByPriceRange(int lower, int higher) {
+            model.clear();
+            ArrayList<Apparel> targetList = wardrobe.selectByPriceRange(lower, higher);
+            for (Apparel item: targetList) {
+                model.addElement(item);
+            }
+        }
+
+        private void filterByBrand(String brandName) {
+            model.clear();
+            ArrayList<Apparel> targetList = wardrobe.selectByBrand(brandName);
+            for (Apparel item: targetList) {
+                model.addElement(item);
+            }
+        }
+
+        private void filterBySold() {
+            model.clear();
+            ArrayList<Apparel> targetList = wardrobe.getSoldItems();
+            for (Apparel item: targetList) {
+                model.addElement(item);
+            }
         }
 
         public void toggleCheckBoxes() {

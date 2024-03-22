@@ -38,8 +38,8 @@
     "size": "30",
     "soldDate": {
       "month": 12,
-      "year": 31,
-      "day": 2023
+      "year": 2023,
+      "day": 31
     },
     "isSold": true,
     "priceSold": 300,
@@ -102,5 +102,33 @@
     "description": "Timeless",
     "category": "Tops",
     "pricePaid": 750
+  },
+  {
+    "itemName": "Canvas Jacket",
+    "brandName": "FOG",
+    "purchaseDate": {
+      "month": 6,
+      "year": 2023,
+      "day": 1
+    },
+    "size": "S",
+    "isSold": false,
+    "description": "Perfect everyday jacket",
+    "category": "Tops",
+    "pricePaid": 400
+  },
+  {
+    "itemName": "Black Nylon Bomber",
+    "brandName": "FOG",
+    "purchaseDate": {
+      "month": 1,
+      "year": 2024,
+      "day": 1
+    },
+    "size": "S",
+    "isSold": false,
+    "description": "Winter Go-to",
+    "category": "Tops",
+    "pricePaid": 500
   }
 ]}
