@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// Wardrobe app with a GUI
 public class WardrobeGui extends JFrame  {
 
     private static final String JSON_STORE = "./data/wardrobe.json";
@@ -33,7 +34,7 @@ public class WardrobeGui extends JFrame  {
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
 
-
+    // EFFECTS: initialize the wardrobe GUI
     public WardrobeGui() {
 
         super("Wardrobe");
@@ -48,10 +49,12 @@ public class WardrobeGui extends JFrame  {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
-//        pack();
+        pack();
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: synchronize the content in DefaultListModel with the one in wardrobe
     public void syncJListWithWardrobe() {
         model.clear();
         for (Apparel item: wardrobe.getApparels()) {
@@ -61,7 +64,8 @@ public class WardrobeGui extends JFrame  {
 
 
     // MODIFIES: this
-    // EFFECTS:  adds DisplayPanel to the center of the Frame
+    // EFFECTS:  removes everything in the center of the screen
+    //           and adds DisplayPanel to the center of the Frame
     public void displayItemDetails(Apparel item) {
         remove(filtersPanel);
         remove(addItemPanel);
@@ -73,9 +77,12 @@ public class WardrobeGui extends JFrame  {
         repaint();
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes everything in the center of the screen and renders AddItemPanel
     public void renderAddItemPanel() {
         remove(displayPanel);
         remove(filtersPanel);
+        syncJListWithWardrobe();
         add(addItemPanel, BorderLayout.CENTER);
         revalidate();
         repaint();
@@ -89,7 +96,7 @@ public class WardrobeGui extends JFrame  {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    // EFFECTS: creates list, adds listener to it and render it onto the frame
+    // EFFECTS: creates list, adds listener to it and renders it onto the frame
     public void initializeJList() {
         model = new DefaultListModel<>();
         apparelJList = new JList<>(model);
@@ -114,6 +121,7 @@ public class WardrobeGui extends JFrame  {
         add(scrollPane, BorderLayout.NORTH);
     }
 
+    // EFFECTS: initialize the Frame of the GUI
     public void initializeFrame() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(1024, 792));
@@ -132,13 +140,12 @@ public class WardrobeGui extends JFrame  {
             }
             bottomPanel.filtersButton.setEnabled(true);
             bottomPanel.statsButton.setEnabled(true);
-
-
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
+    // EFFECTS: save apparels from current wardrobe (not from JList) to JSON
     public void saveWardrobeToJson() {
         try {
             jsonWriter.open();
@@ -150,8 +157,7 @@ public class WardrobeGui extends JFrame  {
         }
     }
 
-    // represents the bottom (button) panel of the app
-    //
+    // represents the bottom panel with buttons of the app
     public class BottomPanel extends JPanel implements ActionListener {
         protected JButton loadButton =  new JButton("load");
         protected JButton saveButton = new JButton("save");
@@ -160,12 +166,14 @@ public class WardrobeGui extends JFrame  {
         protected JButton filtersButton = new JButton("filters");
         protected JButton statsButton = new JButton("stats");
 
+        // EFFECTS: creates the bottom panel
         public BottomPanel() {
             super();
             initializeBottomPanel();
             setVisible(true);
         }
 
+        // EFFECTS: initialize the bottom panel
         public void initializeBottomPanel() {
 
             loadButton.addActionListener(this);
@@ -208,20 +216,21 @@ public class WardrobeGui extends JFrame  {
             if (e.getSource() == filtersButton) {
                 renderFilters();
             }
-
         }
     }
 
+    // EFFECTS: removes everything in central frame and renders the FiltersPanel
     public void renderFilters() {
         remove(addItemPanel);
         remove(displayPanel);
         add(filtersPanel, BorderLayout.CENTER);
-        filtersPanel.setVisible(true);
         revalidate();
         repaint();
     }
 
+    // EFFECTS： removes everything in central frame and display wardrobe stats there.
     public void displayStats() {
+        syncJListWithWardrobe();
         remove(addItemPanel);
         displayPanel.removeAll();
         displayPanel.setLayout(new GridLayout(3, 1));
@@ -242,11 +251,14 @@ public class WardrobeGui extends JFrame  {
         repaint();
     }
 
+    // EFFECTS: deletes the given item from the wardrobe and JList as well.
     public void deleteItem(Apparel item) {
         model.removeElement(item);
         wardrobe.getApparels().remove(item);
     }
 
+    // represents a panel for displaying info (no interaction) in central frame
+    // can be used for displaying item info and stats
     public class DisplayPanel extends JPanel {
 
         // EFFECTS: creates a new panel, and sets LayOut
@@ -254,8 +266,8 @@ public class WardrobeGui extends JFrame  {
             super();
         }
 
-        // EFFECTS: put given piece of item info into a panel with its description
-        // EFFECTS: and return the panel
+        // EFFECTS: puts given piece of item info into a panel with its description
+        //          and returns the panel
         public JPanel createContentPanel(String desc, String info) {
             JPanel panel = new JPanel();
             panel.setLayout(new GridLayout(2,1));
@@ -264,6 +276,7 @@ public class WardrobeGui extends JFrame  {
             return panel;
         }
 
+        //EFFECTS: fill the displayPanel with single info panels
         public void fillDisplayPanelWithContentPanel(Apparel item) {
             removeAll();
             add(createContentPanel("Designer: ", item.getBrandName()));
@@ -280,6 +293,7 @@ public class WardrobeGui extends JFrame  {
         }
     }
 
+    // represents a panel with action listeners; used for adding items
     public class AddItemPanel extends JPanel implements ActionListener {
 
         JTextField itemNameField = new JTextField(15);
@@ -298,13 +312,14 @@ public class WardrobeGui extends JFrame  {
         JTextField priceSoldField = new JTextField(15);
         JButton submitButton = new JButton("submit");
 
+        // EFFECTS: creates the panel and initializes it
         public AddItemPanel() {
             this.setLayout(new GridLayout(16, 1));
             initializeAddItemPanel();
         }
 
+        //EFFECTS: initializes the panel
         public void initializeAddItemPanel() {
-
             putElementIntoPanel(itemNameField, "Item name: ");
             putElementIntoPanel(brandField, "Designer: ");
             putElementIntoPanel(categoryField, "Category: ");
@@ -329,6 +344,8 @@ public class WardrobeGui extends JFrame  {
             this.setVisible(true);
         }
 
+        // EFFECTS: a helper function that adds the arguments into a new panel
+        //          and returns the panel
         public void putElementIntoPanel(JComponent component, String labelText) {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
@@ -339,6 +356,7 @@ public class WardrobeGui extends JFrame  {
         }
 
         @Override
+        // EFFECTS: handles the events in this panel
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == isSoldCheckBox) {
                 if (isSoldCheckBox.isSelected()) {
@@ -365,6 +383,7 @@ public class WardrobeGui extends JFrame  {
             revalidate();
         }
 
+        // EFFECTS: resets the textField (called after the user finishes adding an item)
         public void resetTextFields() {
             itemNameField.setText("");
             brandField.setText("");
@@ -405,8 +424,7 @@ public class WardrobeGui extends JFrame  {
         }
     }
 
-
-
+    // represents: A Panel with event listener; used for displaying Filters
     public class FiltersPanel extends JPanel implements ActionListener {
         JCheckBox priceRangeCheckBox = new JCheckBox("Select by price range: ");
         JLabel priceRangeLabel = new JLabel("to");
@@ -425,6 +443,7 @@ public class WardrobeGui extends JFrame  {
         // EFFECTS: creates FiltersPanel, and sets layout
         public FiltersPanel() {
             super(new GridLayout(5,1));
+            this.setVisible(true);
             setLayout(null);
             initPriceRangePanel();
             initBrandNamePanel();
@@ -433,6 +452,7 @@ public class WardrobeGui extends JFrame  {
             initRemoveButtonPanel();
         }
 
+        // EFFECTS: initialize the priceRangePanel
         public void initPriceRangePanel() {
             JPanel priceRangePanel = new JPanel(new GridLayout(1,2));
             priceRangeCheckBox.addActionListener(this);
@@ -447,6 +467,7 @@ public class WardrobeGui extends JFrame  {
             this.add(priceRangePanel);
         }
 
+        // EFFECTS: initialize the brandNamePanel
         public void initBrandNamePanel() {
             JPanel brandNamePanel = new JPanel(new GridLayout(1,2));
             brandCheckBox.addActionListener(this);
@@ -460,6 +481,7 @@ public class WardrobeGui extends JFrame  {
             this.add(brandNamePanel);
         }
 
+        // EFFECTS: initialize the soldPanel
         public void initSoldPanel() {
             JPanel soldPanel = new JPanel(new GridLayout(1,1));
             soldCheckBox.addActionListener(this);
@@ -468,6 +490,7 @@ public class WardrobeGui extends JFrame  {
             this.add(soldPanel);
         }
 
+        // EFFECTS: initialize the submitButtonPanel
         public void initSubmitButtonPanel() {
             JPanel submitBtnPanel = new JPanel(new GridLayout(1,1));
             submitBtnPanel.setBounds(0, 140, 1000, 40);
@@ -476,6 +499,7 @@ public class WardrobeGui extends JFrame  {
             this.add(submitBtnPanel);
         }
 
+        // EFFECTS: initialize the removeButtonPanel
         public void initRemoveButtonPanel() {
             JPanel removeBtnPanel = new JPanel(new GridLayout(1,1));
             removeBtnPanel.setBounds(0, 190, 1000, 40);
@@ -486,6 +510,7 @@ public class WardrobeGui extends JFrame  {
 
 
         @Override
+        // EFFECTS: handles events happened in this panel
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == submitFilerButton) {
                 handleFilter();
@@ -496,6 +521,7 @@ public class WardrobeGui extends JFrame  {
             }
         }
 
+        // EFFECTS: handles Filter Commands
         public void handleFilter() {
             if (priceRangeCheckBox.isSelected()) {
                 filterByPriceRange(Integer.parseInt(priceLowerBoundField.getText()),
@@ -509,6 +535,8 @@ public class WardrobeGui extends JFrame  {
             }
         }
 
+        // EFFECTS: selects from the wardrobe and displays the items asked by the user
+        //          WILL NOT affect the wardrobe field
         public void filterByPriceRange(int lower, int higher) {
             model.clear();
             ArrayList<Apparel> targetList = wardrobe.selectByPriceRange(lower, higher);
@@ -517,6 +545,8 @@ public class WardrobeGui extends JFrame  {
             }
         }
 
+        // EFFECTS: selects from the wardrobe and displays the items asked by the user
+        //          WILL NOT affect the wardrobe field
         private void filterByBrand(String brandName) {
             model.clear();
             ArrayList<Apparel> targetList = wardrobe.selectByBrand(brandName);
@@ -525,6 +555,8 @@ public class WardrobeGui extends JFrame  {
             }
         }
 
+        // EFFECTS: selects from the wardrobe and displays the items asked by the user
+        //          WILL NOT affect the wardrobe field
         private void filterBySold() {
             model.clear();
             ArrayList<Apparel> targetList = wardrobe.getSoldItems();
@@ -533,6 +565,8 @@ public class WardrobeGui extends JFrame  {
             }
         }
 
+        // EFFECTS: toggle the checkBoxes so that there is always
+        //          up to one box can be selected
         public void toggleCheckBoxes() {
             if (!priceRangeCheckBox.isSelected()
                     && !brandCheckBox.isSelected()

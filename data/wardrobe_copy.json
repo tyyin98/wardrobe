@@ -130,5 +130,39 @@
     "description": "Winter Go-to",
     "category": "Tops",
     "pricePaid": 500
+  },
+  {
+    "itemName": "Varsity Jacket",
+    "brandName": "FOG",
+    "purchaseDate": {
+      "month": 6,
+      "year": 2022,
+      "day": 15
+    },
+    "size": "S",
+    "isSold": false,
+    "description": "Grail",
+    "category": "Tops",
+    "pricePaid": 1100
+  },
+  {
+    "itemName": "Snap Button Trouser",
+    "brandName": "FOG",
+    "purchaseDate": {
+      "month": 1,
+      "year": 2023,
+      "day": 1
+    },
+    "size": "S",
+    "soldDate": {
+      "month": 2023,
+      "year": 400,
+      "day": 1
+    },
+    "isSold": true,
+    "priceSold": 300,
+    "description": "Looks good but not on me",
+    "category": "Bottoms",
+    "pricePaid": 350
   }
 ]}
