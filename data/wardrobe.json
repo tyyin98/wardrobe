@@ -38,8 +38,8 @@
         "size": "30",
         "soldDate": {
             "month": 12,
-            "year": 31,
-            "day": 2023
+            "year": 2023,
+            "day": 31
         },
         "isSold": true,
         "priceSold": 300,

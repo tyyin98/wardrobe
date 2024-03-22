@@ -21,15 +21,13 @@ public class WardrobeGui extends JFrame  {
 
     private static final String JSON_STORE = "./data/wardrobe.json";
 
-
     private JList<Apparel> apparelJList;
     private DefaultListModel<Apparel> model;
 
-
     private DisplayPanel displayPanel;
     private AddItemPanel addItemPanel;
+    private FiltersPanel filtersPanel;
     private BottomPanel bottomPanel;
-
 
     private Wardrobe wardrobe;
     private JsonReader jsonReader;
@@ -44,11 +42,11 @@ public class WardrobeGui extends JFrame  {
         initializeDisplayPanel();
         initializeAddItemPanel();
         initializeBottomPanel();
+        filtersPanel = new FiltersPanel();
 
         wardrobe = null;
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-
 
         pack();
         setVisible(true);
@@ -58,15 +56,17 @@ public class WardrobeGui extends JFrame  {
         addItemPanel = new AddItemPanel();
     }
 
-    // EFFECTS:  creates DisplayPanel to the center of the Frame
+    // EFFECTS:  creates DisplayPanel
     public void initializeDisplayPanel() {
         displayPanel = new DisplayPanel();
     }
 
     // MODIFIES: this
     // EFFECTS:  adds DisplayPanel to the center of the Frame
-    public void renderDisplayPanel(Apparel item) {
+    public void displayItemDetails(Apparel item) {
+        remove(filtersPanel);
         remove(addItemPanel);
+        displayPanel.setLayout(new GridLayout(11, 1));
         displayPanel.fillDisplayPanelWithContentPanel(item);
         add(displayPanel, BorderLayout.CENTER);
         displayPanel.setVisible(true);
@@ -76,6 +76,7 @@ public class WardrobeGui extends JFrame  {
 
     public void renderAddItemPanel() {
         remove(displayPanel);
+        remove(filtersPanel);
         add(addItemPanel, BorderLayout.CENTER);
         revalidate();
         repaint();
@@ -93,6 +94,8 @@ public class WardrobeGui extends JFrame  {
     public void initializeJList() {
         model = new DefaultListModel<>();
         apparelJList = new JList<>(model);
+//        apparelJList.setPreferredSize(new Dimension(1000, 200));
+        JScrollPane scrollPane = new JScrollPane(apparelJList);
 
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
@@ -104,12 +107,12 @@ public class WardrobeGui extends JFrame  {
                     // Get the selected item
                     Apparel selectedItem = apparelJList.getModel().getElementAt(index);
 //                    JOptionPane.showMessageDialog(null, "Double-clicked on: " + selectedItem); // Trigger your event
-                    renderDisplayPanel(selectedItem);
+                    displayItemDetails(selectedItem);
                 }
             }
         };
         apparelJList.addMouseListener(mouseAdapter);
-        add(apparelJList, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.NORTH);
     }
 
     public void initializeFrame() {
@@ -128,6 +131,10 @@ public class WardrobeGui extends JFrame  {
             for (Apparel item: apparels) {
                 model.addElement(item);
             }
+            bottomPanel.filtersButton.setEnabled(true);
+            bottomPanel.statsButton.setEnabled(true);
+
+
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
@@ -147,10 +154,12 @@ public class WardrobeGui extends JFrame  {
     // represents the bottom (button) panel of the app
     //
     public class BottomPanel extends JPanel implements ActionListener {
-        private JButton loadButton;
-        private JButton saveButton;
-        private JButton addButton;
-        private JButton deleteButton;
+        protected JButton loadButton =  new JButton("load");
+        protected JButton saveButton = new JButton("save");
+        protected JButton addButton = new JButton("add");
+        protected JButton deleteButton = new JButton("delete");
+        protected JButton filtersButton = new JButton("filters");
+        protected JButton statsButton = new JButton("stats");
 
         public BottomPanel() {
             super();
@@ -159,18 +168,22 @@ public class WardrobeGui extends JFrame  {
         }
 
         public void initializeBottomPanel() {
-            loadButton = new JButton("load");
-            saveButton = new JButton("save");
-            addButton = new JButton("add");
-            deleteButton = new JButton("delete");
+
             loadButton.addActionListener(this);
             addButton.addActionListener(this);
             saveButton.addActionListener(this);
             deleteButton.addActionListener(this);
+            filtersButton.addActionListener(this);
+            filtersButton.setEnabled(false);
+            statsButton.addActionListener(this);
+            statsButton.setEnabled(false);
+
             this.add(loadButton);
             this.add(saveButton);
             this.add(addButton);
             this.add(deleteButton);
+            this.add(filtersButton);
+            this.add(statsButton);
         }
 
         @Override
@@ -190,7 +203,44 @@ public class WardrobeGui extends JFrame  {
                 System.out.println("delete");
                 deleteItem(apparelJList.getSelectedValue());
             }
+            if (e.getSource() == statsButton) {
+                displayStats();
+            }
+            if (e.getSource() == filtersButton) {
+                renderFilters();
+            }
+
         }
+    }
+
+    public void renderFilters() {
+        remove(addItemPanel);
+        remove(displayPanel);
+        add(filtersPanel, BorderLayout.CENTER);
+        filtersPanel.setVisible(true);
+        revalidate();
+        repaint();
+    }
+
+    public void displayStats() {
+        remove(addItemPanel);
+        displayPanel.removeAll();
+        displayPanel.setLayout(new GridLayout(3, 1));
+        JLabel numItemsBoughtLabel = new JLabel();
+        JLabel favBrandLabel = new JLabel();
+        JLabel numItemsSoldLabel = new JLabel();
+        numItemsBoughtLabel.setText("You bought " + wardrobe.getNumItems()
+                + " items worth a total of $" + wardrobe.calcTotalValue());
+        favBrandLabel.setText(wardrobe.getFavBrand() + " is your favourite brand. You have "
+                + wardrobe.selectByBrand(wardrobe.getFavBrand()).size() + " items of this brand.");
+        numItemsSoldLabel.setText("You sold " + wardrobe.getNumItemsSold() + " in total and made $"
+                        + wardrobe.calcRevenue() + " by selling them.");
+        displayPanel.add(numItemsBoughtLabel);
+        displayPanel.add(favBrandLabel);
+        displayPanel.add(numItemsSoldLabel);
+        add(displayPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 
     public void deleteItem(Apparel item) {
@@ -198,15 +248,13 @@ public class WardrobeGui extends JFrame  {
         wardrobe.getApparels().remove(item);
     }
 
-
-
     public class DisplayPanel extends JPanel {
 
         // EFFECTS: creates a new panel, and sets LayOut
         DisplayPanel() {
             super();
-            setLayout(new GridLayout(11, 1));
-            setBackground(new Color(238, 238,228));
+
+//            setBackground(new Color(238, 238,228));
         }
 
 
@@ -314,6 +362,8 @@ public class WardrobeGui extends JFrame  {
                 Apparel item = createApparel();
                 wardrobe.addAnItem(item);
                 model.addElement(item);
+                bottomPanel.filtersButton.setEnabled(true);
+                bottomPanel.statsButton.setEnabled(true);
                 resetTextFields();
             }
             repaint();
@@ -358,6 +408,121 @@ public class WardrobeGui extends JFrame  {
             }
 
             return newApparel;
+        }
+    }
+
+
+
+    public class FiltersPanel extends JPanel implements ActionListener {
+        JCheckBox priceRangeCheckBox = new JCheckBox("Select by price range: ");
+        JLabel priceRangeLabel = new JLabel("to");
+        JTextField priceLowerBoundField = new JTextField(10);
+        JTextField priceHigherBoundField = new JTextField(10);
+
+        JCheckBox brandCheckBox = new JCheckBox("Select by brand: ");
+        JLabel brandLabel = new JLabel("Brand name: ");
+        JTextField brandNameField = new JTextField(15);
+
+        JCheckBox soldCheckBox = new JCheckBox("Select sold items");
+
+        JButton submitFilerButton = new JButton("Submit Filter");
+
+        // EFFECTS: creates FiltersPanel, and sets layout
+        public FiltersPanel() {
+            super(new GridLayout(4,1));
+            setLayout(null);
+            initPriceRangePanel();
+            initBrandNamePanel();
+            initSoldPanel();
+            initSubmitButtonPanel();
+        }
+
+        public void initPriceRangePanel() {
+            JPanel priceRangePanel = new JPanel(new GridLayout(1,2));
+            priceRangeCheckBox.addActionListener(this);
+            priceRangePanel.add(priceRangeCheckBox);
+            JPanel priceFieldPanel = new JPanel(new GridLayout(1,3));
+            priceFieldPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
+            priceFieldPanel.add(priceLowerBoundField);
+            priceFieldPanel.add(priceRangeLabel);
+            priceFieldPanel.add(priceHigherBoundField);
+            priceRangePanel.add(priceFieldPanel);
+            priceRangePanel.setBounds(0, 0, 1000, 40);
+            this.add(priceRangePanel);
+        }
+
+        public void initBrandNamePanel() {
+            JPanel brandNamePanel = new JPanel(new GridLayout(1,2));
+            brandCheckBox.addActionListener(this);
+            brandNamePanel.add(brandCheckBox);
+            JPanel brandFieldPanel = new JPanel(new GridLayout(1,2));
+            brandFieldPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
+            brandFieldPanel.add(brandLabel);
+            brandFieldPanel.add(brandNameField);
+            brandNamePanel.add(brandFieldPanel);
+            brandNamePanel.setBounds(0, 50, 1000, 40);
+            this.add(brandNamePanel);
+        }
+
+        public void initSoldPanel() {
+            JPanel soldPanel = new JPanel(new GridLayout(1,1));
+            soldCheckBox.addActionListener(this);
+            soldPanel.add(soldCheckBox);
+            soldPanel.setBounds(0, 100, 1000, 40);
+            this.add(soldPanel);
+        }
+
+        public void initSubmitButtonPanel() {
+            JPanel submitBtnPanel = new JPanel(new GridLayout(1,1));
+            submitBtnPanel.setBounds(0, 140, 1000, 40);
+            submitFilerButton.addActionListener(this);
+            submitBtnPanel.add(submitFilerButton);
+            this.add(submitBtnPanel);
+        }
+
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == submitFilerButton) {
+                handleFilter();
+            } else {
+                toggleCheckBoxes();
+            }
+        }
+
+        public void handleFilter() {
+            if (priceRangeCheckBox.isSelected()) {
+                //
+            }
+            if (brandCheckBox.isSelected()) {
+                //
+            }
+            if (soldCheckBox.isSelected()) {
+                //
+            }
+
+        }
+
+        public void toggleCheckBoxes() {
+            if (!priceRangeCheckBox.isSelected()
+                    && !brandCheckBox.isSelected()
+                    && !soldCheckBox.isSelected()) {
+                priceRangeCheckBox.setEnabled(true);
+                brandCheckBox.setEnabled(true);
+                soldCheckBox.setEnabled(true);
+            }
+            if (priceRangeCheckBox.isSelected()) {
+                brandCheckBox.setEnabled(false);
+                soldCheckBox.setEnabled(false);
+            }
+            if (brandCheckBox.isSelected()) {
+                priceRangeCheckBox.setEnabled(false);
+                soldCheckBox.setEnabled(false);
+            }
+            if (soldCheckBox.isSelected()) {
+                priceRangeCheckBox.setEnabled(false);
+                brandCheckBox.setEnabled(false);
+            }
         }
     }
 }

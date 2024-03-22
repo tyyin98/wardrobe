@@ -21,6 +21,7 @@ public class Wardrobe implements Writable {
     // EFFECTS: create a new item and add it to the apparels collection
     public void addAnItem(Apparel item) {
         apparels.add(item);
+        
     }
 
     // REQUIRES: index < apparels.size()
