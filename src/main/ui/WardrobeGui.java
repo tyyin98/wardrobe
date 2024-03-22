@@ -48,7 +48,7 @@ public class WardrobeGui extends JFrame  {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
-        pack();
+//        pack();
         setVisible(true);
     }
 
