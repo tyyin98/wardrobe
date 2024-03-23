@@ -228,7 +228,7 @@ public class WardrobeGui extends JFrame  {
         repaint();
     }
 
-    // EFFECTS： removes everything in central frame and display wardrobe stats there.
+    // EFFECTS: removes everything in central frame and display wardrobe stats there.
     public void displayStats() {
         syncJListWithWardrobe();
         remove(addItemPanel);
