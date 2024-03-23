@@ -164,5 +164,47 @@
         "description": "Looks good but not on me",
         "category": "Bottoms",
         "pricePaid": 350
+    },
+    {
+        "itemName": "101 Sneakers B&W",
+        "brandName": "FOG",
+        "purchaseDate": {
+            "month": 1,
+            "year": 2020,
+            "day": 1
+        },
+        "size": "41",
+        "isSold": false,
+        "description": "Best Vans-like sneaker ever",
+        "category": "Shoes",
+        "pricePaid": 400
+    },
+    {
+        "itemName": "101 Sneakers Beige",
+        "brandName": "FOG",
+        "purchaseDate": {
+            "month": 4,
+            "year": 2023,
+            "day": 1
+        },
+        "size": "41",
+        "isSold": false,
+        "description": "What a stealth",
+        "category": "Shoes",
+        "pricePaid": 150
+    },
+    {
+        "itemName": "Tractor Chelsea Boots",
+        "brandName": "Balenciaga",
+        "purchaseDate": {
+            "month": 3,
+            "year": 2022,
+            "day": 15
+        },
+        "size": "41",
+        "isSold": false,
+        "description": "Adds 7 cm to your height",
+        "category": "Shoes",
+        "pricePaid": 550
     }
 ]}

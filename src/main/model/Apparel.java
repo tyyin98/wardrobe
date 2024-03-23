@@ -21,6 +21,7 @@ public class Apparel implements Writable {
     private boolean isSold;
     private int priceSold;
     private Date soldDate;
+    private String imgSrc;
 
     // REQUIRES: brandName, itemName, category, size not empty. pricePaid not negative
     // EFFECTS: create a new apparel item
@@ -33,6 +34,7 @@ public class Apparel implements Writable {
         this.description = description;
         this.purchaseDate = DEFAULT_DATE;
         this.isSold = false;
+        this.imgSrc = "";
     }
 
     // REQUIRES: isSold == false
@@ -110,6 +112,10 @@ public class Apparel implements Writable {
         return this.priceSold;
     }
 
+    public String getImgSrc() {
+        return this.imgSrc;
+    }
+
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
@@ -149,6 +155,10 @@ public class Apparel implements Writable {
 
     public void setPriceSold(int priceSold) {
         this.priceSold = priceSold;
+    }
+
+    public void setImgSrc(String src) {
+        this.imgSrc = src;
     }
 
 

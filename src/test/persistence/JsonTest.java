@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class JsonTest {
 
     protected void checkItem(String brandName, String itemName, String category, String size,
-                             int pricePaid, String description, Date purchaseDate, boolean isSold,
+                             int pricePaid, String description, Date purchaseDate, boolean isSold, String src,
                              Apparel item) {
 
         assertEquals(brandName, item.getBrandName());
@@ -21,7 +21,9 @@ public class JsonTest {
         assertEquals(purchaseDate.getDay(), item.getPurchaseDate().getDay());
         assertEquals(purchaseDate.getYear(), item.getPurchaseDate().getYear());
 
+
         assertEquals(isSold, item.getIsSold());
+        assertEquals(src, item.getImgSrc());
     }
     protected void checkSoldItem(boolean isSold, int soldMonth, int soldDay, int soldYear, int soldPrice, Apparel item) {
         assertEquals(isSold ,item.getIsSold());

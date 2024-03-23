@@ -27,13 +27,13 @@ public class ApparelTest {
         assertEquals(1, testApparelA.getPurchaseDate().getMonth());
         assertEquals(2, testApparelA.getPurchaseDate().getDay());
         assertEquals("nothing", testApparelA.getDescription());
+        assertEquals("", testApparelA.getImgSrc());
         assertFalse(testApparelA.getIsSold());
     }
 
     @Test
     public void testToString() {
         assertEquals("Dries | Bomber Jacket | $1000", testApparelA.toString());
-
     }
 
     @Test
@@ -82,11 +82,16 @@ public class ApparelTest {
     }
 
 
-
     @Test
     public void testSetIsSold() {
         testApparelA.setIsSold(true);
         assertTrue(testApparelA.getIsSold());
+    }
+
+    @Test
+    public void testSetImgSrc() {
+        testApparelA.setImgSrc("123");
+        assertEquals("123", testApparelA.getImgSrc());
     }
 
 

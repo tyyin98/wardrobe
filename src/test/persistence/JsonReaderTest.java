@@ -43,7 +43,7 @@ public class JsonReaderTest extends JsonTest {
             assertEquals(2, apparels.size());
             Date purchaseDate = new Date(1, 2, 2024);
             checkItem("FOG", "Brown Raw Edge Denim", "Pants", "30", 300,
-                    "not my type", purchaseDate, true, apparels.get(1) );
+                    "not my type", purchaseDate, true, "", apparels.get(1) );
             checkSoldItem(true, 3, 4, 2023, 302, apparels.get(1));
 
         } catch (IOException e) {

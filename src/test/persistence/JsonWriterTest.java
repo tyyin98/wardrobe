@@ -64,7 +64,7 @@ public class JsonWriterTest extends JsonTest {
             assertEquals(2, apparels.size());
             Date purchaseDate = new Date(1, 2, 2024);
             checkItem("Dries", "Bomber Jacket", "Tops", "S", 1000,
-                    "Best bomber", purchaseDate, false, apparels.get(0) );
+                    "Best bomber", purchaseDate, false, "", apparels.get(0) );
             checkSoldItem(true, 3, 4, 2023, 302, apparels.get(1));
 
         } catch (IOException e) {
