@@ -46,6 +46,7 @@ public class Apparel implements Writable {
         setSoldDate(soldDate);
     }
 
+    // EFFECTS: represents how an apparel will be printed as a string
     @Override
     public String toString() {
         return this.getBrandName() + " | " + this.getItemName() + " | $" + this.getPricePaid();
@@ -63,6 +64,7 @@ public class Apparel implements Writable {
         json.put("description", description);
         json.put("purchaseDate", purchaseDate.toJson());
         json.put("isSold", isSold);
+        json.put("imgSrc", imgSrc);
 
         if (isSold) {
             json.put("isSold", true);

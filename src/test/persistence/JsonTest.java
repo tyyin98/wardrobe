@@ -21,7 +21,6 @@ public class JsonTest {
         assertEquals(purchaseDate.getDay(), item.getPurchaseDate().getDay());
         assertEquals(purchaseDate.getYear(), item.getPurchaseDate().getYear());
 
-
         assertEquals(isSold, item.getIsSold());
         assertEquals(src, item.getImgSrc());
     }

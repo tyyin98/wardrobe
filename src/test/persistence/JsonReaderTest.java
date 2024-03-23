@@ -37,7 +37,7 @@ public class JsonReaderTest extends JsonTest {
     @Test
     void testReaderGeneralWardrobe() {
         try {
-            JsonReader reader = new JsonReader("./data/testWriterGeneralWardrobe.json");
+            JsonReader reader = new JsonReader("./data/testReaderGeneralWardrobe.json");
             Wardrobe wd = reader.read();
             List<Apparel> apparels = wd.getApparels();
             assertEquals(2, apparels.size());

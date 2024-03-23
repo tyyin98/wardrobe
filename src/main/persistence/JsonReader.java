@@ -30,7 +30,7 @@ public class JsonReader {
         String jsonData = readFile(source);
 //        System.out.println(jsonData);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseWorkRoom(jsonObject);
+        return parseWardrobe(jsonObject);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -45,7 +45,7 @@ public class JsonReader {
     }
 
     // EFFECTS: parses wardrobe from JSON object and returns it
-    private Wardrobe parseWorkRoom(JSONObject jsonObject) {
+    private Wardrobe parseWardrobe(JSONObject jsonObject) {
         Wardrobe wd = new Wardrobe();
         addApparels(wd, jsonObject);
         return wd;
@@ -75,9 +75,9 @@ public class JsonReader {
         int purchaseMonth = purchaseDateJson.getInt("month");
         int purchaseDay = purchaseDateJson.getInt("day");
         int purchaseYear = purchaseDateJson.getInt("year");
-        Date purchaseDate = new Date(purchaseMonth, purchaseDay, purchaseYear);
         Apparel item = new Apparel(brandName, itemName, category, size, pricePaid, description);
-        item.setPurchaseDate(purchaseDate);
+        item.setPurchaseDate(new Date(purchaseMonth, purchaseDay, purchaseYear));
+        item.setImgSrc(jsonObject.getString("imgSrc"));
         if (isSold) {
             JSONObject soldDateJson = jsonObject.getJSONObject("soldDate");
             int soldMonth = soldDateJson.getInt("month");

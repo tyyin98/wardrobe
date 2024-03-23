@@ -11,7 +11,8 @@
         "isSold": false,
         "description": "Best bomber",
         "category": "Tops",
-        "pricePaid": 1000
+        "pricePaid": 1000,
+        "imgSrc": ""
     },
     {
         "itemName": "Brown Raw Edge Denim",
@@ -31,6 +32,7 @@
         "priceSold": 302,
         "description": "not my type",
         "category": "Pants",
-        "pricePaid": 300
+        "pricePaid": 300,
+        "imgSrc": ""
     }
 ]}
