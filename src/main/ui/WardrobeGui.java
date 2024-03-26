@@ -283,8 +283,8 @@ public class WardrobeGui extends JFrame  {
         wardrobe.getApparels().remove(item);
     }
 
-    // represents a panel for displaying info (no interaction) in central frame
-    // is used for 1. displaying item info or 2. wardrobe stats
+    // represents a panel for displaying info (no user interaction) in central frame
+    // is used for displaying 1. item info or 2. wardrobe stats
     public class DisplayPanel extends JPanel {
 
         // EFFECTS: creates a new panel, and sets LayOut
@@ -353,7 +353,7 @@ public class WardrobeGui extends JFrame  {
         JButton choosePhotoButton = new JButton("Select a File");
         JButton submitButton = new JButton("submit");
 
-        String selectedPhotoPath = new String();
+//        String selectedPhotoPath = new String();
 
         // EFFECTS: creates the panel and initializes it
         public AddItemPanel() {
@@ -401,7 +401,7 @@ public class WardrobeGui extends JFrame  {
         }
 
         @Override
-        // EFFECTS: handles the events in this panel
+        // EFFECTS: handles the events in AddItemPanel
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == isSoldCheckBox) {
                 handleIsSoldCheckBox();
@@ -416,6 +416,7 @@ public class WardrobeGui extends JFrame  {
             revalidate();
         }
 
+        // EFFECTS: handle states for IsSoldCheckBox
         public void handleIsSoldCheckBox() {
             if (isSoldCheckBox.isSelected()) {
                 yearSoldField.setEnabled(true);
@@ -430,15 +431,14 @@ public class WardrobeGui extends JFrame  {
             }
         }
 
+        // EFFECTS: handle states for ChoosePhotoBtn
         public void handleChoosePhotoBtn() {
-
-            int response = fileChooser.showOpenDialog(WardrobeGui.this);
-            if (response == JFileChooser.APPROVE_OPTION) {
-                // continue here
-                selectedPhotoPath = fileChooser.getSelectedFile().getAbsolutePath();
-            }
+            fileChooser.showOpenDialog(WardrobeGui.this);
         }
 
+        // EFFECTS: creates a resized photo from originalImagePath
+        //          saves it under "./data/img"
+        //          names it with fileName
         public void createResizedPhoto(String originalImagePath, String fileName) {
             try {
                 // Read the original image
@@ -464,6 +464,8 @@ public class WardrobeGui extends JFrame  {
             }
         }
 
+        // EFFECTS: generate a string of current time
+        //          which will be used as the resized image's fileName
         public String generateTimeString() {
             // Get the current date and time
             LocalDateTime now = LocalDateTime.now();
@@ -476,14 +478,9 @@ public class WardrobeGui extends JFrame  {
             return formattedDateTime;
         }
 
-        // EFFECTS: creates an imageIcon for the apparel;
-        //          using the picture chosen by the user;
-        //          puts the created photo under ./data/img/
-        //          names the created photo after the current time: yyyyMMddHHmmss
-        public void createImageIcon() {
-            //
-        }
-
+        // EFFECTS: generate an Apparel using info typed in by the user;
+        //          if the user selected a photo,
+        //          create a resized photo and setImgSrc for the newly created Apparel
         public void handleSubmitBtn() {
             Apparel item = createApparel();
 
@@ -492,7 +489,6 @@ public class WardrobeGui extends JFrame  {
                 createResizedPhoto(fileChooser.getSelectedFile().getAbsolutePath(), resizedImgSrc);
                 item.setImgSrc(resizedImgSrc);
             }
-
             wardrobe.addAnItem(item);
             model.addElement(item);
             bottomPanel.filtersButton.setEnabled(true);

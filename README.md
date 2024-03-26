@@ -40,3 +40,29 @@ Therefore, I am interested in building an app to track my wardrobe collection.
 - I want to be able to load my wardrobe from file
 
 
+# Instructions for Grader
+
+**To generate the first required action related to the user story "adding multiple Xs to a Y":**
+- Click the button labelled "add", then type in information about the item to add
+- Decide if you want to mark this item as "sold"
+- Optionally, you can choose an image for the item
+- Hit the submit button
+- You will see the added item at the bottom of the list, which is at the top of the GUI.
+
+**To generate the second required action related to the user story "adding multiple Xs to a Y":**
+- Click the button labelled "filters"
+- Pick a filter from the three options
+- Click the button labelled "submit filter"
+- You will see the items kept by the filter you selected
+
+**To locate my visual component:**
+- Click any of the item in the list
+- A picture of the item will be displayed in the UI
+- If the user did not assign an image to the item, the app will display a default image
+
+**To save the state of my application:**
+- Click the button labelled as "save"
+
+**To reload the state of my application:**
+- Click the button labelled as "load"
+
