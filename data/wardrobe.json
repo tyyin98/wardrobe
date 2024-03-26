@@ -11,7 +11,8 @@
         "isSold": false,
         "description": "Best Bomber Jacket",
         "category": "Tops",
-        "pricePaid": 1000
+        "pricePaid": 1000,
+        "imgSrc": "20240325003553"
     },
     {
         "itemName": "Flared Jeans",
@@ -25,7 +26,8 @@
         "isSold": false,
         "description": "My Go-to",
         "category": "Pants",
-        "pricePaid": 300
+        "pricePaid": 300,
+        "imgSrc": "20240325234543"
     },
     {
         "itemName": "Brown Raw Edge Denim",
@@ -45,7 +47,8 @@
         "priceSold": 300,
         "description": "Not my type. Gonna sell it.",
         "category": "Pants",
-        "pricePaid": 200
+        "pricePaid": 200,
+        "imgSrc": "20240325234849"
     },
     {
         "itemName": "Ramone Sneakers",
@@ -59,7 +62,8 @@
         "isSold": false,
         "description": "MY GO-To",
         "category": "Shoes",
-        "pricePaid": 400
+        "pricePaid": 400,
+        "imgSrc": ""
     },
     {
         "itemName": "Black Panther Jacket",
@@ -73,7 +77,8 @@
         "isSold": false,
         "description": "Grail",
         "category": "Tops",
-        "pricePaid": 350
+        "pricePaid": 350,
+        "imgSrc": "20240325235225"
     },
     {
         "itemName": "Flared Cargo",
@@ -87,7 +92,8 @@
         "isSold": false,
         "description": "Another Grail",
         "category": "Pants",
-        "pricePaid": 450
+        "pricePaid": 450,
+        "imgSrc": ""
     },
     {
         "itemName": "Wool Overcoat",
@@ -101,7 +107,8 @@
         "isSold": false,
         "description": "Timeless",
         "category": "Tops",
-        "pricePaid": 750
+        "pricePaid": 750,
+        "imgSrc": "20240325235900"
     },
     {
         "itemName": "Canvas Jacket",
@@ -115,7 +122,8 @@
         "isSold": false,
         "description": "Perfect everyday jacket",
         "category": "Tops",
-        "pricePaid": 400
+        "pricePaid": 400,
+        "imgSrc": "20240326000038"
     },
     {
         "itemName": "Black Nylon Bomber",
@@ -129,7 +137,8 @@
         "isSold": false,
         "description": "Winter Go-to",
         "category": "Tops",
-        "pricePaid": 500
+        "pricePaid": 500,
+        "imgSrc": ""
     },
     {
         "itemName": "Varsity Jacket",
@@ -143,7 +152,8 @@
         "isSold": false,
         "description": "Grail",
         "category": "Tops",
-        "pricePaid": 1100
+        "pricePaid": 1100,
+        "imgSrc": "20240326000243"
     },
     {
         "itemName": "Snap Button Trouser",
@@ -163,7 +173,8 @@
         "priceSold": 300,
         "description": "Looks good but not on me",
         "category": "Bottoms",
-        "pricePaid": 350
+        "pricePaid": 350,
+        "imgSrc": ""
     },
     {
         "itemName": "101 Sneakers B&W",
@@ -177,7 +188,8 @@
         "isSold": false,
         "description": "Best Vans-like sneaker ever",
         "category": "Shoes",
-        "pricePaid": 400
+        "pricePaid": 400,
+        "imgSrc": ""
     },
     {
         "itemName": "101 Sneakers Beige",
@@ -191,7 +203,8 @@
         "isSold": false,
         "description": "What a stealth",
         "category": "Shoes",
-        "pricePaid": 150
+        "pricePaid": 150,
+        "imgSrc": ""
     },
     {
         "itemName": "Tractor Chelsea Boots",
@@ -205,6 +218,22 @@
         "isSold": false,
         "description": "Adds 7 cm to your height",
         "category": "Shoes",
-        "pricePaid": 550
+        "pricePaid": 550,
+        "imgSrc": ""
+    },
+    {
+        "itemName": "Canvas Jeans",
+        "brandName": "FOG",
+        "purchaseDate": {
+            "month": 1,
+            "year": 2022,
+            "day": 1
+        },
+        "size": "31",
+        "isSold": false,
+        "description": "All time fav",
+        "category": "Bottoms",
+        "pricePaid": 300,
+        "imgSrc": "20240325003341"
     }
 ]}

@@ -1,9 +1,13 @@
 package ui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
 
 import model.Apparel;
 import model.Date;
@@ -17,10 +21,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 // Wardrobe app with a GUI
 public class WardrobeGui extends JFrame  {
 
     private static final String JSON_STORE = "./data/wardrobe.json";
+    private static final String IMG_SRC = "./data/img/";
+    private static final String DEFAULT_IMG = "wardrobeLogo.png";
+
 
     private JList<Apparel> apparelJList;
     private DefaultListModel<Apparel> model;
@@ -70,7 +80,7 @@ public class WardrobeGui extends JFrame  {
         remove(filtersPanel);
         remove(addItemPanel);
         displayPanel.setLayout(new GridLayout(11, 1));
-        displayPanel.fillDisplayPanelWithContentPanel(item);
+        displayPanel.fillDisplayPanelWithItemDetails(item);
         add(displayPanel, BorderLayout.CENTER);
         displayPanel.setVisible(true);
         revalidate();
@@ -258,7 +268,7 @@ public class WardrobeGui extends JFrame  {
     }
 
     // represents a panel for displaying info (no interaction) in central frame
-    // can be used for displaying item info and stats
+    // is used for 1. displaying item info or 2. wardrobe stats
     public class DisplayPanel extends JPanel {
 
         // EFFECTS: creates a new panel, and sets LayOut
@@ -277,18 +287,29 @@ public class WardrobeGui extends JFrame  {
         }
 
         //EFFECTS: fill the displayPanel with single info panels
-        public void fillDisplayPanelWithContentPanel(Apparel item) {
+        public void fillDisplayPanelWithItemDetails(Apparel item) {
             removeAll();
-            add(createContentPanel("Designer: ", item.getBrandName()));
-            add(createContentPanel("Item: ", item.getItemName()));
-            add(createContentPanel("Category: ", item.getCategory()));
-            add(createContentPanel("Size: ", item.getSize()));
-            add(createContentPanel("Price: $", String.valueOf(item.getPricePaid())));
-            add(createContentPanel("Description: ", item.getDescription()));
-            add(createContentPanel("Date of Purchase: ", item.getPurchaseDate().getDateLong()));
+            setLayout(new GridLayout(1,2));
+            JPanel textPanel = new JPanel();
+            textPanel.setLayout(new GridLayout(9,1));
+            textPanel.add(createContentPanel("Designer: ", item.getBrandName()));
+            textPanel.add(createContentPanel("Item: ", item.getItemName()));
+            textPanel.add(createContentPanel("Category: ", item.getCategory()));
+            textPanel.add(createContentPanel("Size: ", item.getSize()));
+            textPanel.add(createContentPanel("Price: $", String.valueOf(item.getPricePaid())));
+            textPanel.add(createContentPanel("Description: ", item.getDescription()));
+            textPanel.add(createContentPanel("Date of Purchase: ", item.getPurchaseDate().getDateLong()));
             if (item.getIsSold()) {
-                add(createContentPanel("Sold for: $", String.valueOf(item.getPriceSold())));
-                add(createContentPanel("Date of Sale: ", item.getSoldDate().getDateLong()));
+                textPanel.add(createContentPanel("Sold for: $", String.valueOf(item.getPriceSold())));
+                textPanel.add(createContentPanel("Date of Sale: ", item.getSoldDate().getDateLong()));
+            }
+            add(textPanel);
+            if (item.getImgSrc().length() != 0) {
+                ImageIcon image = new ImageIcon(IMG_SRC + item.getImgSrc() + ".jpg");
+                add(new JLabel(image));
+            } else {
+                ImageIcon image = new ImageIcon(IMG_SRC + DEFAULT_IMG);
+                add(new JLabel(image));
             }
         }
     }
@@ -310,12 +331,19 @@ public class WardrobeGui extends JFrame  {
         JTextField monthSoldField = new JTextField(15);
         JTextField daySoldField = new JTextField(15);
         JTextField priceSoldField = new JTextField(15);
+
+        JFileChooser fileChooser = new JFileChooser();
+
+        JButton choosePhotoButton = new JButton("Select a File");
         JButton submitButton = new JButton("submit");
+
+        String selectedPhotoPath = new String();
 
         // EFFECTS: creates the panel and initializes it
         public AddItemPanel() {
             this.setLayout(new GridLayout(16, 1));
             initializeAddItemPanel();
+            this.setVisible(true);
         }
 
         //EFFECTS: initializes the panel
@@ -339,9 +367,10 @@ public class WardrobeGui extends JFrame  {
             putElementIntoPanel(daySoldField, "Day of sale: ");
             priceSoldField.setEnabled(false);
             putElementIntoPanel(priceSoldField, "Sold price: ");
+            choosePhotoButton.addActionListener(this);
+            putElementIntoPanel(choosePhotoButton, "Choose a photo");
             submitButton.addActionListener(this);
             putElementIntoPanel(submitButton, "");
-            this.setVisible(true);
         }
 
         // EFFECTS: a helper function that adds the arguments into a new panel
@@ -359,28 +388,100 @@ public class WardrobeGui extends JFrame  {
         // EFFECTS: handles the events in this panel
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == isSoldCheckBox) {
-                if (isSoldCheckBox.isSelected()) {
-                    yearSoldField.setEnabled(true);
-                    monthSoldField.setEnabled(true);
-                    daySoldField.setEnabled(true);
-                    priceSoldField.setEnabled(true);
-                } else {
-                    yearSoldField.setEnabled(false);
-                    monthSoldField.setEnabled(false);
-                    daySoldField.setEnabled(false);
-                    priceSoldField.setEnabled(false);
-                }
+                handleIsSoldCheckBox();
+            }
+            if (e.getSource() == choosePhotoButton) {
+                handleChoosePhotoBtn();
             }
             if (e.getSource() == submitButton) {
-                Apparel item = createApparel();
-                wardrobe.addAnItem(item);
-                model.addElement(item);
-                bottomPanel.filtersButton.setEnabled(true);
-                bottomPanel.statsButton.setEnabled(true);
-                resetTextFields();
+                handleSubmitBtn();
             }
             repaint();
             revalidate();
+        }
+
+        public void handleIsSoldCheckBox() {
+            if (isSoldCheckBox.isSelected()) {
+                yearSoldField.setEnabled(true);
+                monthSoldField.setEnabled(true);
+                daySoldField.setEnabled(true);
+                priceSoldField.setEnabled(true);
+            } else {
+                yearSoldField.setEnabled(false);
+                monthSoldField.setEnabled(false);
+                daySoldField.setEnabled(false);
+                priceSoldField.setEnabled(false);
+            }
+        }
+
+        public void handleChoosePhotoBtn() {
+
+            int response = fileChooser.showOpenDialog(WardrobeGui.this);
+            if (response == JFileChooser.APPROVE_OPTION) {
+                // continue here
+                selectedPhotoPath = fileChooser.getSelectedFile().getAbsolutePath();
+            }
+        }
+
+        public void createResizedPhoto(String originalImagePath, String fileName) {
+            try {
+                // Read the original image
+                BufferedImage originalImage = ImageIO.read(new File(originalImagePath));
+
+                // Calculate the new height to maintain the aspect ratio
+                double aspectRatio = (double) originalImage.getWidth() / originalImage.getHeight();
+                int newHeight = (int) (300 / aspectRatio);
+
+                // Resize the image
+                Image resizedImage = originalImage.getScaledInstance(300, newHeight, Image.SCALE_SMOOTH);
+                BufferedImage outputImage = new BufferedImage(300, newHeight, BufferedImage.TYPE_INT_RGB);
+                outputImage.getGraphics().drawImage(resizedImage, 0, 0, null);
+
+                // Write the resized image to a new file
+                File outputFile = new File("./data/img/" + fileName + ".jpg");
+                outputFile.getParentFile().mkdirs(); // Create the output directory if it doesn't exist
+                ImageIO.write(outputImage, "jpg", outputFile); // Change "jpg" to your desired image format
+
+                System.out.println("Image resized and saved to " + "./data/img");
+            } catch (IOException e) {
+                System.err.println("Error occurred while resizing and saving the image: " + e.getMessage());
+            }
+        }
+
+        public String generateTimeString() {
+            // Get the current date and time
+            LocalDateTime now = LocalDateTime.now();
+
+            // Define a pattern for the date and time format with no spaces
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+
+            // Format the current date and time according to the pattern
+            String formattedDateTime = now.format(formatter);
+            return formattedDateTime;
+        }
+
+        // EFFECTS: creates an imageIcon for the apparel;
+        //          using the picture chosen by the user;
+        //          puts the created photo under ./data/img/
+        //          names the created photo after the current time: yyyyMMddHHmmss
+        public void createImageIcon() {
+            //
+        }
+
+        public void handleSubmitBtn() {
+            Apparel item = createApparel();
+
+            if (fileChooser.getSelectedFile() != null) {
+                String resizedImgSrc = generateTimeString();
+                createResizedPhoto(fileChooser.getSelectedFile().getAbsolutePath(), resizedImgSrc);
+                item.setImgSrc(resizedImgSrc);
+            }
+
+            wardrobe.addAnItem(item);
+            model.addElement(item);
+            bottomPanel.filtersButton.setEnabled(true);
+            bottomPanel.statsButton.setEnabled(true);
+            resetTextFields();
         }
 
         // EFFECTS: resets the textField (called after the user finishes adding an item)
@@ -399,6 +500,7 @@ public class WardrobeGui extends JFrame  {
             monthSoldField.setText("");
             daySoldField.setText("");
             priceSoldField.setText("");
+            fileChooser.setSelectedFile(null);
         }
 
         // EFFECTS: creates and returns an apparel with info from textfield
