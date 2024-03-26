@@ -2,6 +2,8 @@ package ui;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -111,30 +113,43 @@ public class WardrobeGui extends JFrame  {
         model = new DefaultListModel<>();
         apparelJList = new JList<>(model);
         JScrollPane scrollPane = new JScrollPane(apparelJList);
-        scrollPane.setPreferredSize(new Dimension(1024, 200));
+        scrollPane.setPreferredSize(new Dimension(512, 200));
 
-        MouseAdapter mouseAdapter = new MouseAdapter() {
+//        MouseAdapter mouseAdapter = new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                if (e.getClickCount() == 2) { // Check for double-click
+//                    // Get the index of the clicked item
+//                    int index = apparelJList.locationToIndex(e.getPoint());
+//                    // Get the selected item
+//                    Apparel selectedItem = apparelJList.getModel().getElementAt(index);
+////                    JOptionPane.showMessageDialog(null, "Double-clicked on: " + selectedItem); // Trigger your event
+//                    displayItemDetails(selectedItem);
+//                }
+//            }
+//        };
+//        apparelJList.addMouseListener(mouseAdapter);
+
+        // Add a ListSelectionListener to the JList
+        apparelJList.addListSelectionListener(new ListSelectionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                // Check for double-click
-                if (e.getClickCount() == 2) {
-                    // Get the index of the clicked item
-                    int index = apparelJList.locationToIndex(e.getPoint());
-                    // Get the selected item
-                    Apparel selectedItem = apparelJList.getModel().getElementAt(index);
-//                    JOptionPane.showMessageDialog(null, "Double-clicked on: " + selectedItem); // Trigger your event
-                    displayItemDetails(selectedItem);
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) { // This check prevents double events
+                    int index = apparelJList.getSelectedIndex();
+                    if (index >= 0) {
+                        Apparel selectedItem = apparelJList.getModel().getElementAt(index);
+                        displayItemDetails(selectedItem);
+                    }
                 }
             }
-        };
-        apparelJList.addMouseListener(mouseAdapter);
+        });
         add(scrollPane, BorderLayout.NORTH);
     }
 
     // EFFECTS: initialize the Frame of the GUI
     public void initializeFrame() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(1024, 792));
+        setPreferredSize(new Dimension(512, 792));
         setLayout(new BorderLayout());
         setResizable(true);
     }
@@ -241,6 +256,7 @@ public class WardrobeGui extends JFrame  {
     // EFFECTS: removes everything in central frame and display wardrobe stats there.
     public void displayStats() {
         syncJListWithWardrobe();
+        remove(filtersPanel);
         remove(addItemPanel);
         displayPanel.removeAll();
         displayPanel.setLayout(new GridLayout(3, 1));
@@ -556,7 +572,7 @@ public class WardrobeGui extends JFrame  {
 
         // EFFECTS: initialize the priceRangePanel
         public void initPriceRangePanel() {
-            JPanel priceRangePanel = new JPanel(new GridLayout(1,2));
+            JPanel priceRangePanel = new JPanel(new GridLayout(2,1));
             priceRangeCheckBox.addActionListener(this);
             priceRangePanel.add(priceRangeCheckBox);
             JPanel priceFieldPanel = new JPanel(new GridLayout(1,3));
@@ -565,13 +581,13 @@ public class WardrobeGui extends JFrame  {
             priceFieldPanel.add(priceRangeLabel);
             priceFieldPanel.add(priceHigherBoundField);
             priceRangePanel.add(priceFieldPanel);
-            priceRangePanel.setBounds(0, 0, 1000, 40);
+            priceRangePanel.setBounds(0, 0, 600, 80);
             this.add(priceRangePanel);
         }
 
         // EFFECTS: initialize the brandNamePanel
         public void initBrandNamePanel() {
-            JPanel brandNamePanel = new JPanel(new GridLayout(1,2));
+            JPanel brandNamePanel = new JPanel(new GridLayout(2,1));
             brandCheckBox.addActionListener(this);
             brandNamePanel.add(brandCheckBox);
             JPanel brandFieldPanel = new JPanel(new GridLayout(1,2));
@@ -579,7 +595,7 @@ public class WardrobeGui extends JFrame  {
             brandFieldPanel.add(brandLabel);
             brandFieldPanel.add(brandNameField);
             brandNamePanel.add(brandFieldPanel);
-            brandNamePanel.setBounds(0, 50, 1000, 40);
+            brandNamePanel.setBounds(0, 90, 600, 80);
             this.add(brandNamePanel);
         }
 
@@ -588,14 +604,14 @@ public class WardrobeGui extends JFrame  {
             JPanel soldPanel = new JPanel(new GridLayout(1,1));
             soldCheckBox.addActionListener(this);
             soldPanel.add(soldCheckBox);
-            soldPanel.setBounds(0, 100, 1000, 40);
+            soldPanel.setBounds(0, 180, 300, 40);
             this.add(soldPanel);
         }
 
         // EFFECTS: initialize the submitButtonPanel
         public void initSubmitButtonPanel() {
             JPanel submitBtnPanel = new JPanel(new GridLayout(1,1));
-            submitBtnPanel.setBounds(0, 140, 1000, 40);
+            submitBtnPanel.setBounds(0, 230, 300, 40);
             submitFilerButton.addActionListener(this);
             submitBtnPanel.add(submitFilerButton);
             this.add(submitBtnPanel);
@@ -604,7 +620,7 @@ public class WardrobeGui extends JFrame  {
         // EFFECTS: initialize the removeButtonPanel
         public void initRemoveButtonPanel() {
             JPanel removeBtnPanel = new JPanel(new GridLayout(1,1));
-            removeBtnPanel.setBounds(0, 190, 1000, 40);
+            removeBtnPanel.setBounds(0, 280, 300, 40);
             removeFilterButton.addActionListener(this);
             removeBtnPanel.add(removeFilterButton);
             this.add(removeBtnPanel);
