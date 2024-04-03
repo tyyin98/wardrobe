@@ -66,3 +66,49 @@ Therefore, I am interested in building an app to track my wardrobe collection.
 **To reload the state of my application:**
 - Click the button labelled as "load"
 
+# Phase 4: Task 2
+Program is exiting. Printing event log:
+Tue Apr 02 20:44:37 PDT 2024
+Dries Van Noten | Bomber Jacket | $1000 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+Maison Margiela | Flared Jeans | $300 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+FOG | Brown Raw Edge Denim | $200 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+Rick Owens | Ramone Sneakers | $400 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+Yeezy | Black Panther Jacket | $350 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+Vujade | Flared Cargo | $450 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+FOG | Wool Overcoat | $750 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+FOG | Canvas Jacket | $400 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+FOG | Black Nylon Bomber | $500 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+FOG | Varsity Jacket | $1100 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+FOG | Snap Button Trouser | $350 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+FOG | 101 Sneakers B&W | $400 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+FOG | 101 Sneakers Beige | $150 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+Balenciaga | Tractor Chelsea Boots | $550 added to the wardrobe
+Tue Apr 02 20:44:37 PDT 2024
+FOG | Canvas Jeans | $300 added to the wardrobe
+Tue Apr 02 20:44:54 PDT 2024
+All items from $100 to $800 selected
+Tue Apr 02 20:45:03 PDT 2024
+All items of FOG selected
+Tue Apr 02 20:45:11 PDT 2024
+All sold items selected
+Tue Apr 02 20:45:52 PDT 2024
+Adidas | A sports hoodie | $100 added to the wardrobe
+Tue Apr 02 20:45:57 PDT 2024
+Adidas | A sports hoodie | $100 deleted from the wardrobe
+
+Process finished with exit code 0
+
+

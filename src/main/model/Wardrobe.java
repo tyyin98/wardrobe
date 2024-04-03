@@ -68,6 +68,7 @@ public class Wardrobe implements Writable {
                 resultList.add(item);
             }
         }
+
         return resultList;
     }
 
@@ -79,6 +80,7 @@ public class Wardrobe implements Writable {
                 resultList.add(item);
             }
         }
+        EventLog.getInstance().logEvent(new Event("All items of " + brand + " selected"));
         return resultList;
     }
 
@@ -92,6 +94,8 @@ public class Wardrobe implements Writable {
                 resultList.add(item);
             }
         }
+        EventLog.getInstance().logEvent(new Event("All items from $"
+                + lowerBound + " to $" + higherBound + " selected"));
         return resultList;
     }
 
@@ -191,6 +195,8 @@ public class Wardrobe implements Writable {
                 targetList.add(item);
             }
         }
+        EventLog.getInstance().logEvent(new Event("All sold items selected"));
+
         return targetList;
     }
 
