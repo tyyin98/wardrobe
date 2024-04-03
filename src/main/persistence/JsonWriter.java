@@ -1,5 +1,7 @@
 package persistence;
 
+import model.Event;
+import model.EventLog;
 import model.Wardrobe;
 
 import org.json.JSONObject;
@@ -28,7 +30,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of wardrobe to file
     public void write(Wardrobe wd) {
         JSONObject json = wd.toJson();
         saveToFile(json.toString(TAB));

@@ -176,9 +176,9 @@ public class WardrobeGui extends JFrame  {
             jsonWriter.open();
             jsonWriter.write(wardrobe);
             jsonWriter.close();
-            System.out.println("Saved to " + JSON_STORE);
+//            System.out.println("Saved to " + JSON_STORE);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
+//            System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 
@@ -225,14 +225,14 @@ public class WardrobeGui extends JFrame  {
                 loadApparels();
             }
             if (e.getSource() == saveButton) {
-                System.out.println("saving");
+//                System.out.println("saving");
                 saveWardrobeToJson();
             }
             if (e.getSource() == addButton) {
                 renderAddItemPanel();
             }
             if (e.getSource() == deleteButton) {
-                System.out.println("delete");
+//                System.out.println("delete");
                 deleteItem(apparelJList.getSelectedValue());
             }
             if (e.getSource() == statsButton) {
@@ -280,7 +280,7 @@ public class WardrobeGui extends JFrame  {
     // EFFECTS: deletes the given item from the wardrobe and JList as well.
     public void deleteItem(Apparel item) {
         model.removeElement(item);
-        wardrobe.getApparels().remove(item);
+        wardrobe.removeAnItem(item);
     }
 
     // represents a panel for displaying info (no user interaction) in central frame
@@ -458,9 +458,9 @@ public class WardrobeGui extends JFrame  {
                 outputFile.getParentFile().mkdirs(); // Create the output directory if it doesn't exist
                 ImageIO.write(outputImage, "jpg", outputFile); // Change "jpg" to your desired image format
 
-                System.out.println("Image resized and saved to " + "./data/img");
+//                System.out.println("Image resized and saved to " + "./data/img");
             } catch (IOException e) {
-                System.err.println("Error occurred while resizing and saving the image: " + e.getMessage());
+//                System.err.println("Error occurred while resizing and saving the image: " + e.getMessage());
             }
         }
 

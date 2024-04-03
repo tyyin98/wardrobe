@@ -21,6 +21,7 @@ public class Wardrobe implements Writable {
     // EFFECTS: create a new item and add it to the apparels collection
     public void addAnItem(Apparel item) {
         apparels.add(item);
+        EventLog.getInstance().logEvent(new Event(item + " added to the wardrobe"));
         
     }
 
@@ -28,7 +29,17 @@ public class Wardrobe implements Writable {
     // MODIFIES: this
     // EFFECTS: remove an item by index
     public void removeAnItem(int index) {
+        Apparel item = apparels.get(index);
         apparels.remove(index);
+        EventLog.getInstance().logEvent(new Event(item + " deleted from the wardrobe"));
+    }
+
+    // REQUIRES: index < apparels.size()
+    // MODIFIES: this
+    // EFFECTS: remove an item by index
+    public void removeAnItem(Apparel item) {
+        apparels.remove(item);
+        EventLog.getInstance().logEvent(new Event(item + " deleted from the wardrobe"));
     }
 
     // EFFECTS: return the size of the wardrobe
