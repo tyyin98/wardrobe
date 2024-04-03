@@ -126,8 +126,9 @@ However, there are also tradeoffs for this refactoring, such as introducing a lo
 
 **Enum for the category field**
 
-There is a field called category in Class Apparel. There is no restrictions on the value assigned to it, 
-as long as the value is of type String. However, since there is a fixed set of desirable values
-("Tops", "Bottoms", "Shoes"), I should have created an enum called Category and use it the Apparel class.
-
+The Apparel class includes a category field that currently accepts any string value. 
+Given that there are a fixed set of desirable values ("Tops", "Bottoms", "Shoes"), 
+it would be more appropriate to define an enum named Category and use it in the Apparel 
+class. This change would ensure type safety and restrict the category values to the 
+predefined set.
 
