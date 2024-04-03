@@ -111,6 +111,23 @@ Adidas | A sports hoodie | $100 deleted from the wardrobe
 
 Process finished with exit code 0
 
-# Phase 4: Task 3
+# Phase 4: Task 3 -- Reflections
+
+**Nested Classes in WardrobeGUI**
+
+For the GUI of my program, I created a class called WardrobeGUI with a lot of nested classes in it. 
+The nested pattern allows the inner classes to have direct access to the fields and methods of the enclosing class, 
+so that I do not have to create and call certain getter or setter methods for passing and getting references.
+However, the nested classes also made my WardrobeGUI class very lengthy. The readability of code in 
+this class is somehow affected. 
+To enhance readability, I could consider separating all nested classes from the WardrobeGUI class 
+and making them into individual classes. This would help make the code more readable and maintainable. 
+However, there are also tradeoffs for this refactoring, such as introducing a lot of coupling.
+
+**Enum for the category field**
+
+There is a field called category in Class Apparel. There is no restrictions on the value assigned to it, 
+as long as the value is of type String. However, since there is a fixed set of desirable values
+("Tops", "Bottoms", "Shoes"), I should have created an enum called Category and use it the Apparel class.
 
 
