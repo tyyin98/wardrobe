@@ -111,7 +111,7 @@ Adidas | A sports hoodie | $100 deleted from the wardrobe
 
 Process finished with exit code 0
 
-# Phase 4: Task 3 -- Reflections
+# Phase 4: Task 3 -- Reflection
 
 **Nested Classes in WardrobeGUI**
 
