@@ -166,7 +166,7 @@ public class WardrobeGui extends JFrame  {
             bottomPanel.filtersButton.setEnabled(true);
             bottomPanel.statsButton.setEnabled(true);
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+//            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
