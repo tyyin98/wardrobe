@@ -43,6 +43,9 @@ public class WardrobeTest {
         assertEquals(5, testWardrobe.getApparels().size());
         testWardrobe.removeAnItem(2);
         assertEquals(4, testWardrobe.getApparels().size());
+        testWardrobe.removeAnItem(testApparelA);
+        assertEquals(3, testWardrobe.getApparels().size());
+
     }
 
     @Test
