@@ -40,7 +40,7 @@ Therefore, I am interested in building an app to track my wardrobe collection.
 - I want to be able to load my wardrobe from file
 
 
-# Instructions for Grader
+
 
 **To generate the first required action related to the user story "adding multiple Xs to a Y":**
 - Click the button labelled "add", then type in information about the item to add
